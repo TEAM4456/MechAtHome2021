@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.XboxController;
 public class ControllerAxis implements DoubleSupplier{
 
     private final XboxController controller;
-    private final int axis;
+    private final int AXIS;
 
     /**
      * Constructor for the specified controller axis. This takes in the controller and the ID of the 
@@ -30,11 +30,12 @@ public class ControllerAxis implements DoubleSupplier{
      */
     public ControllerAxis(XboxController xboxController, int axisID){
         controller = xboxController;
-        axis = axisID;
+        AXIS = axisID;
     }
-
+    
     @Override
     public double getAsDouble(){
-        return controller.getRawAxis(axis);
+        return controller.getRawAxis(AXIS);
     }
+    
 }

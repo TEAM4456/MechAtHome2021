@@ -34,6 +34,5 @@ public class RobotMap {
         rightFollower = new WPI_TalonSRX(4);
         rightFollower.setInverted(false);
         rightFollower.set(ControlMode.Follower, 3);
-
     }
 }

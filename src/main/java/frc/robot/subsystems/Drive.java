@@ -14,6 +14,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTableEntry;
+
 /**
  * The drivetrain of the robot.
  */
@@ -21,7 +24,8 @@ public class Drive extends SubsystemBase {
 	private final WPI_TalonSRX leftDrive, rightDrive;
     
     /**
-     * The drivetrain of the robot. Takes in two {@link WPI_Talon}: a right master 
+     * The drivetrain of the robot. Takes in two {@link WPI_TalonSRX}s: a right master talon,
+     * and a left master talon.
      * 
      * @param leftTalon - the left master {@link WPI_TalonSRX} of the robot
      * @param rightTalon - the right master {@link WPI_TalonSRX} of the robot 
@@ -81,5 +85,16 @@ public class Drive extends SubsystemBase {
 
 		leftDrive.set(ControlMode.PercentOutput, leftVal);
 		rightDrive.set(ControlMode.PercentOutput, rightVal);
-	}
+    }
+
+    public void autoAlign(NetworkTableEntry x){
+        double leftVal = x.getDouble(0.0)/30;
+        double rightVal = -leftVal;
+
+        SmartDashboard.putNumber("Left %Output", leftVal);
+        SmartDashboard.putNumber("Right %Output", rightVal);
+
+        leftDrive.set(ControlMode.PercentOutput, leftVal);
+        rightDrive.set(ControlMode.PercentOutput, rightVal);
+    }
 }
