@@ -88,8 +88,8 @@ public class Drive extends SubsystemBase {
     }
 
     public void autoAlign(NetworkTableEntry x){
-        double leftVal = x.getDouble(0.0)/30;
-        double rightVal = -leftVal;
+        double leftVal = -x.getDouble(0.0)/20;
+        double rightVal = leftVal;
 
         SmartDashboard.putNumber("Left %Output", leftVal);
         SmartDashboard.putNumber("Right %Output", rightVal);

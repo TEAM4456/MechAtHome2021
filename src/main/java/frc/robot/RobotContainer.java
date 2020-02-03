@@ -7,15 +7,21 @@
 
 package frc.robot;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 import frc.robot.RobotMap;
-import frc.robot.commands.autoAlign;
+import frc.robot.commands.AutoAlign;
+import frc.robot.commands.Rumble;
+import frc.robot.commands.RunIntake;
+import frc.robot.commands.SetActuatorSpeed;
+import frc.robot.commands.Shoot;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -25,28 +31,34 @@ import frc.robot.commands.autoAlign;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
+    private final DifferentialDrive diffDrive = new DifferentialDrive(RobotMap.leftMaster, RobotMap.rightMaster);
     private final Drive drive = new Drive(RobotMap.leftMaster, RobotMap.rightMaster);
+    private final Intake intake = new Intake(RobotMap.intake);
+    private final Shooter shooter = new Shooter(RobotMap.topShooter, RobotMap.bottomShooter);
+    private final Actuator actuator = new Actuator(RobotMap.actuator);
 
     private final XboxController controller = new XboxController(0);
     private final ControllerAxis 
-        //leftX = new ControllerAxis(controller, 0), 
-        leftY = new ControllerAxis(controller, 1), 
+        leftX = new ControllerAxis(controller, 0), 
+        leftY = new ControllerAxis(controller, 1);
         //leftTrigger = new ControllerAxis(controller, 2),
         //rightTrigger = new ControllerAxis(controller, 3),
         //rightX = new ControllerAxis(controller, 4), 
-        rightY = new ControllerAxis(controller, 5);
+        //rightY = new ControllerAxis(controller, 5);
 
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
         // Configure the button bindings
+        SmartDashboard.putNumber("Top Flywheel", 0.0);
+        SmartDashboard.putNumber("Bottom Flywheel", 0.0);
         configureButtonBindings();
 
         // The drive bindings need to be put in this format:
         // drive.setDefaultCommand(new RunCommand(() -> drive.controlScheme(...), drive))
         // The second "drive" is there because the RunCommand function must require drive to run it. 
-        drive.setDefaultCommand(new RunCommand(() -> drive.tankDrive(leftY, rightY), drive));
+        drive.setDefaultCommand(new RunCommand(() -> diffDrive.arcadeDrive(leftY.getAsDouble(), -leftX.getAsDouble(), controller.getStickButtonPressed(Hand.kRight)), drive));
     }
 
     /**
@@ -56,8 +68,18 @@ public class RobotContainer {
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+        JoystickButton aButton = new JoystickButton(controller, 1);
+        aButton.whileHeld(new RunIntake(intake, 0.75));
+        JoystickButton bButton = new JoystickButton(controller, 2);
+        bButton.whileHeld(new Shoot(shooter));
         JoystickButton xButton = new JoystickButton(controller, 3);
-        xButton.whileHeld(new autoAlign(drive));
+        xButton.whileHeld(new AutoAlign(drive));
+        JoystickButton yButton = new JoystickButton(controller, 4);
+        yButton.whileHeld(new RunIntake(intake, -0.4));
+        JoystickButton leftBumper = new JoystickButton(controller, 5);
+        leftBumper.whileHeld(new SetActuatorSpeed(actuator, -.1));
+        JoystickButton rightBumper = new JoystickButton(controller, 6);
+        rightBumper.whileHeld(new SetActuatorSpeed(actuator, .1));
     }
 
 }

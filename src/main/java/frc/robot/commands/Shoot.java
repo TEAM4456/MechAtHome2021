@@ -7,40 +7,36 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Shooter;
 
-public class AutoAlign extends CommandBase {
-    
-    private final Drive drive;
-    private final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-
+public class Shoot extends CommandBase {
+    private final Shooter shooter; 
     /**
-     * Creates a new autoAlign.
+     * Creates a new Shoot.
      */
-    public AutoAlign(Drive driveSubsystem) {
-        drive = driveSubsystem;
-        addRequirements(driveSubsystem);
+    public Shoot(Shooter shooterSubsystem) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        shooter = shooterSubsystem;
+        addRequirements(shooterSubsystem);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        table.getEntry("ledMode").forceSetNumber(3);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        drive.autoAlign(table.getEntry("tx"));
+        shooter.shoot(SmartDashboard.getNumber("Top Flywheel", 0.0), SmartDashboard.getNumber("Bottom Flywheel", 0.0));
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        table.getEntry("ledMode").forceSetNumber(1);
+        shooter.shoot(0, 0);
     }
 
     // Returns true when the command should end.

@@ -7,40 +7,38 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Actuator;
 
-public class AutoAlign extends CommandBase {
-    
-    private final Drive drive;
-    private final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+public class SetActuatorSpeed extends CommandBase {
+    private final Actuator actuator;
+    private final double percent;
 
     /**
-     * Creates a new autoAlign.
+     * Creates a new SetActuatorSpeed.
      */
-    public AutoAlign(Drive driveSubsystem) {
-        drive = driveSubsystem;
-        addRequirements(driveSubsystem);
+    public SetActuatorSpeed(Actuator actuatorSubsystem, double percentOutput) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        actuator = actuatorSubsystem;
+        percent = percentOutput;
+        addRequirements(actuatorSubsystem);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        table.getEntry("ledMode").forceSetNumber(3);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        drive.autoAlign(table.getEntry("tx"));
+        actuator.setActuatorSpeed(percent);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        table.getEntry("ledMode").forceSetNumber(1);
+        actuator.setActuatorSpeed(0);
     }
 
     // Returns true when the command should end.

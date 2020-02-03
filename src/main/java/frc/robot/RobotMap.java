@@ -8,8 +8,10 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Compressor;
 
 /**
@@ -21,18 +23,47 @@ public class RobotMap {
     public static WPI_TalonSRX leftFollower;
     public static WPI_TalonSRX rightMaster;
     public static WPI_TalonSRX rightFollower;
+    public static WPI_TalonSRX intake;
+    public static WPI_TalonSRX topShooter;
+    public static WPI_TalonSRX bottomShooter;
+    public static WPI_TalonSRX actuator;
 
     public static void init(){
-        leftMaster = new WPI_TalonSRX(1);
-        leftMaster.setInverted(false);
-        leftFollower = new WPI_TalonSRX(2);
-        leftFollower.setInverted(false);
-        leftFollower.set(ControlMode.Follower, 1);
+        leftMaster = new WPI_TalonSRX(3);
+        leftMaster.setInverted(true);
+        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 
-        rightMaster = new WPI_TalonSRX(3);
-        rightMaster.setInverted(false);
-        rightFollower = new WPI_TalonSRX(4);
+        leftMaster.config_kP(0, 0.001, 10);
+        leftMaster.config_kI(0, 0.000001, 10);
+        leftMaster.config_kD(0, 1.0, 10);
+        leftMaster.config_kF(0, 0.3, 10);
+
+        leftFollower = new WPI_TalonSRX(4);
+        leftFollower.setInverted(false);
+        leftFollower.set(ControlMode.Follower, 3);
+
+        rightMaster = new WPI_TalonSRX(1);
+        rightMaster.setInverted(true);
+        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+
+        rightMaster.config_kP(0, 0.001, 10);
+        rightMaster.config_kI(0, 0.000001, 10);
+        rightMaster.config_kD(0, 1.0, 10);
+        rightMaster.config_kF(0, 0.3, 10);
+
+        rightFollower = new WPI_TalonSRX(2);
         rightFollower.setInverted(false);
-        rightFollower.set(ControlMode.Follower, 3);
+        rightFollower.set(ControlMode.Follower, 1);
+
+        topShooter = new WPI_TalonSRX(6);
+        topShooter.setInverted(false);
+        bottomShooter = new WPI_TalonSRX(11);
+        bottomShooter.setInverted(false);
+        
+        intake = new WPI_TalonSRX(8);
+        intake.setInverted(true);
+
+        actuator = new WPI_TalonSRX(7);
+        actuator.setInverted(true);
     }
 }
