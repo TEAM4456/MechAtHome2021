@@ -27,8 +27,12 @@ public class RobotMap {
     public static WPI_TalonSRX topShooter;
     public static WPI_TalonSRX bottomShooter;
     public static WPI_TalonSRX actuator;
+<<<<<<< HEAD
     public static WPI_TalonSRX leftWinch;
     public static WPI_TalonSRX rightWinch;
+=======
+    public static WPI_TalonSRX rotator;
+>>>>>>> f0973b4c82133300a7d77784a9525249f02a4d23
 
     public static void init(){
         leftMaster = new WPI_TalonSRX(4);
@@ -68,10 +72,15 @@ public class RobotMap {
         actuator = new WPI_TalonSRX(7);
         actuator.setInverted(true);
 
+<<<<<<< HEAD
         leftWinch = new WPI_TalonSRX(9);
         leftWinch.setInverted(true);
 
         rightWinch = new WPI_TalonSRX(10);
         rightWinch.setInverted(true);
+=======
+        rotator = new WPI_TalonSRX(5);
+        rotator.setInverted(true);
+>>>>>>> f0973b4c82133300a7d77784a9525249f02a4d23
     }
 }

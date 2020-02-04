@@ -24,6 +24,7 @@ import frc.robot.commands.SetActuatorSpeed;
 import frc.robot.commands.SetLeftWinchSpeed;
 import frc.robot.commands.SetRightWinchSpeed;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.TurnRotator;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -38,7 +39,11 @@ public class RobotContainer {
     private final Intake intake = new Intake(RobotMap.intake);
     private final Shooter shooter = new Shooter(RobotMap.topShooter, RobotMap.bottomShooter);
     private final Actuator actuator = new Actuator(RobotMap.actuator);
+<<<<<<< HEAD
     private final Winch winch = new Winch(RobotMap.leftWinch, RobotMap.rightWinch);
+=======
+    private final Rotator rotator = new Rotator(RobotMap.rotator);
+>>>>>>> f0973b4c82133300a7d77784a9525249f02a4d23
 
     private final XboxController controller = new XboxController(0);
     private final ControllerAxis 
@@ -80,6 +85,7 @@ public class RobotContainer {
         JoystickButton yButton = new JoystickButton(controller, 4);
         yButton.whileHeld(new RunIntake(intake, -0.4));
         JoystickButton leftBumper = new JoystickButton(controller, 5);
+<<<<<<< HEAD
         //leftBumper.whileHeld(new SetActuatorSpeed(actuator, -.1));
         leftBumper.whileHeld(new SetLeftWinchSpeed(winch, -1.0));
         JoystickButton rightBumper = new JoystickButton(controller, 6);
@@ -89,6 +95,13 @@ public class RobotContainer {
         leftStick.whileHeld(new SetLeftWinchSpeed(winch, 1.0));
         JoystickButton rightStick = new JoystickButton(controller, 10);
         rightStick.whileHeld(new SetRightWinchSpeed(winch, 1.0));
+=======
+        leftBumper.whileHeld(new SetActuatorSpeed(actuator, -.25));
+        JoystickButton rightBumper = new JoystickButton(controller, 6);
+        rightBumper.whileHeld(new SetActuatorSpeed(actuator, .25));
+        JoystickButton menuButton = new JoystickButton(controller, 8);
+        menuButton.whileHeld(new TurnRotator(rotator, 0.5));
+>>>>>>> f0973b4c82133300a7d77784a9525249f02a4d23
     }
 
 }
