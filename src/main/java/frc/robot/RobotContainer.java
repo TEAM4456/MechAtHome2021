@@ -22,6 +22,7 @@ import frc.robot.commands.Rumble;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.SetActuatorSpeed;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.TurnRotator;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -36,6 +37,7 @@ public class RobotContainer {
     private final Intake intake = new Intake(RobotMap.intake);
     private final Shooter shooter = new Shooter(RobotMap.topShooter, RobotMap.bottomShooter);
     private final Actuator actuator = new Actuator(RobotMap.actuator);
+    private final Rotator rotator = new Rotator(RobotMap.rotator);
 
     private final XboxController controller = new XboxController(0);
     private final ControllerAxis 
@@ -77,9 +79,11 @@ public class RobotContainer {
         JoystickButton yButton = new JoystickButton(controller, 4);
         yButton.whileHeld(new RunIntake(intake, -0.4));
         JoystickButton leftBumper = new JoystickButton(controller, 5);
-        leftBumper.whileHeld(new SetActuatorSpeed(actuator, -.1));
+        leftBumper.whileHeld(new SetActuatorSpeed(actuator, -.25));
         JoystickButton rightBumper = new JoystickButton(controller, 6);
-        rightBumper.whileHeld(new SetActuatorSpeed(actuator, .1));
+        rightBumper.whileHeld(new SetActuatorSpeed(actuator, .25));
+        JoystickButton menuButton = new JoystickButton(controller, 8);
+        menuButton.whileHeld(new TurnRotator(rotator, 0.5));
     }
 
 }
