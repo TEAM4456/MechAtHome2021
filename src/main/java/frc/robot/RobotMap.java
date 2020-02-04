@@ -27,9 +27,11 @@ public class RobotMap {
     public static WPI_TalonSRX topShooter;
     public static WPI_TalonSRX bottomShooter;
     public static WPI_TalonSRX actuator;
+    public static WPI_TalonSRX leftWinch;
+    public static WPI_TalonSRX rightWinch;
 
     public static void init(){
-        leftMaster = new WPI_TalonSRX(3);
+        leftMaster = new WPI_TalonSRX(4);
         leftMaster.setInverted(true);
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 
@@ -38,9 +40,9 @@ public class RobotMap {
         leftMaster.config_kD(0, 1.0, 10);
         leftMaster.config_kF(0, 0.3, 10);
 
-        leftFollower = new WPI_TalonSRX(4);
+        leftFollower = new WPI_TalonSRX(3);
         leftFollower.setInverted(false);
-        leftFollower.set(ControlMode.Follower, 3);
+        leftFollower.set(ControlMode.Follower, 4);
 
         rightMaster = new WPI_TalonSRX(1);
         rightMaster.setInverted(true);
@@ -65,5 +67,11 @@ public class RobotMap {
 
         actuator = new WPI_TalonSRX(7);
         actuator.setInverted(true);
+
+        leftWinch = new WPI_TalonSRX(9);
+        leftWinch.setInverted(true);
+
+        rightWinch = new WPI_TalonSRX(10);
+        rightWinch.setInverted(true);
     }
 }

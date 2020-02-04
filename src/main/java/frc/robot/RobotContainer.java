@@ -21,6 +21,8 @@ import frc.robot.commands.AutoAlign;
 import frc.robot.commands.Rumble;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.SetActuatorSpeed;
+import frc.robot.commands.SetLeftWinchSpeed;
+import frc.robot.commands.SetRightWinchSpeed;
 import frc.robot.commands.Shoot;
 
 /**
@@ -36,6 +38,7 @@ public class RobotContainer {
     private final Intake intake = new Intake(RobotMap.intake);
     private final Shooter shooter = new Shooter(RobotMap.topShooter, RobotMap.bottomShooter);
     private final Actuator actuator = new Actuator(RobotMap.actuator);
+    private final Winch winch = new Winch(RobotMap.leftWinch, RobotMap.rightWinch);
 
     private final XboxController controller = new XboxController(0);
     private final ControllerAxis 
@@ -77,9 +80,15 @@ public class RobotContainer {
         JoystickButton yButton = new JoystickButton(controller, 4);
         yButton.whileHeld(new RunIntake(intake, -0.4));
         JoystickButton leftBumper = new JoystickButton(controller, 5);
-        leftBumper.whileHeld(new SetActuatorSpeed(actuator, -.1));
+        //leftBumper.whileHeld(new SetActuatorSpeed(actuator, -.1));
+        leftBumper.whileHeld(new SetLeftWinchSpeed(winch, -1.0));
         JoystickButton rightBumper = new JoystickButton(controller, 6);
-        rightBumper.whileHeld(new SetActuatorSpeed(actuator, .1));
+        //rightBumper.whileHeld(new SetActuatorSpeed(actuator, .1));
+        rightBumper.whileHeld(new SetRightWinchSpeed(winch, -1.0));
+        JoystickButton leftStick = new JoystickButton(controller, 9);
+        leftStick.whileHeld(new SetLeftWinchSpeed(winch, 1.0));
+        JoystickButton rightStick = new JoystickButton(controller, 10);
+        rightStick.whileHeld(new SetRightWinchSpeed(winch, 1.0));
     }
 
 }
