@@ -13,7 +13,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
@@ -39,6 +39,7 @@ public class Drive extends SubsystemBase {
     public void periodic(){
         SmartDashboard.putNumber("Left Position", leftDrive.getSelectedSensorPosition());
         SmartDashboard.putNumber("Right Position", rightDrive.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Actuator Position", RobotMap.actuator.getSelectedSensorPosition());
     }
 
     public void autoAlign(NetworkTableEntry x){

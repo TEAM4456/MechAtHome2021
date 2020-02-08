@@ -19,6 +19,7 @@ import frc.robot.subsystems.*;
 import frc.robot.RobotMap;
 import frc.robot.commands.AutoAlign;
 import frc.robot.commands.Rumble;
+import frc.robot.commands.RunHolder;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.SetActuatorSpeed;
 import frc.robot.commands.SetLeftWinchSpeed;
@@ -41,6 +42,7 @@ public class RobotContainer {
     private final Actuator actuator = new Actuator(RobotMap.actuator);
     private final Winch winch = new Winch(RobotMap.leftWinch, RobotMap.rightWinch);
     private final Rotator rotator = new Rotator(RobotMap.rotator);
+    private final Holder holder = new Holder(RobotMap.holder);
 
     private final XboxController controller = new XboxController(0);
     private final ControllerAxis 
@@ -51,6 +53,7 @@ public class RobotContainer {
         //rightX = new ControllerAxis(controller, 4), 
         //rightY = new ControllerAxis(controller, 5);
 
+    private final XboxController controller2 = new XboxController(1);
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
@@ -82,10 +85,8 @@ public class RobotContainer {
         JoystickButton yButton = new JoystickButton(controller, 4);
         yButton.whileHeld(new RunIntake(intake, -0.4));
         JoystickButton leftBumper = new JoystickButton(controller, 5);
-        //leftBumper.whileHeld(new SetActuatorSpeed(actuator, -.1));
         leftBumper.whileHeld(new SetLeftWinchSpeed(winch, -1.0));
         JoystickButton rightBumper = new JoystickButton(controller, 6);
-        //rightBumper.whileHeld(new SetActuatorSpeed(actuator, .1));
         rightBumper.whileHeld(new SetRightWinchSpeed(winch, -1.0));
         JoystickButton leftStick = new JoystickButton(controller, 9);
         leftStick.whileHeld(new SetLeftWinchSpeed(winch, 1.0));
@@ -93,6 +94,13 @@ public class RobotContainer {
         rightStick.whileHeld(new SetRightWinchSpeed(winch, 1.0));
         JoystickButton menuButton = new JoystickButton(controller, 8);
         menuButton.whileHeld(new TurnRotator(rotator, 0.5));
+
+        JoystickButton leftBumper2 = new JoystickButton(controller2, 5);
+        leftBumper2.whileHeld(new SetActuatorSpeed(actuator, -.2));
+        JoystickButton rightBumper2 = new JoystickButton(controller2, 6);
+        rightBumper2.whileHeld(new SetActuatorSpeed(actuator, .2));
+        JoystickButton yButton2 = new JoystickButton(controller2, 4);
+        yButton2.whileHeld(new RunHolder(holder, .2));
     }
 
 }

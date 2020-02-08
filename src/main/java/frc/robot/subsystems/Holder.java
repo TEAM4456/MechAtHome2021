@@ -12,22 +12,18 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Intake extends SubsystemBase {
-    private final WPI_TalonSRX intake;
-    //private final WPI_TalonSRX holder;
+public class Holder extends SubsystemBase {
+  private final WPI_TalonSRX holder;
 
-    public Intake(WPI_TalonSRX intakeTalon) {
-        intake = intakeTalon;
+  public Holder(WPI_TalonSRX holderTalon){
+        holder = holderTalon;
     }
 
-    //public Holder(WPI_TalonSRX holderTalon){
-        //holder = holderTalon;
-    //}
-
-    public void runIntake(double percent){
-        intake.set(ControlMode.PercentOutput, percent);
+    public void RunHolder(double percent){
+      holder.set(ControlMode.PercentOutput, percent);
     }
-
-    //public void Holder(double held);
-        //holder.set(ControlMode.PercentOutput, held);
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
 }
