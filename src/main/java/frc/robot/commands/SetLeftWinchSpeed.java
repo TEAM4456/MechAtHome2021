@@ -8,20 +8,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Winch;
+import frc.robot.subsystems.LeftWinch;
 
 public class SetLeftWinchSpeed extends CommandBase {
-	private final Winch winch;
+	private final LeftWinch leftWinch;
 	private final double percent;
 
 	/**
 	 * Creates a new SetLeftWinchSpeed.
 	 */
-	public SetLeftWinchSpeed(Winch winchSubsystem, double percentOutput) {
+	public SetLeftWinchSpeed(LeftWinch leftWinchSubsystem, double percentOutput) {
 		// Use addRequirements() here to declare subsystem dependencies.
-		winch = winchSubsystem;
+		leftWinch = leftWinchSubsystem;
 		percent = percentOutput;
-		addRequirements(winchSubsystem);
+		addRequirements(leftWinchSubsystem);
 	}
 
 	// Called when the command is initially scheduled.
@@ -32,13 +32,13 @@ public class SetLeftWinchSpeed extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		winch.setLeftWinchSpeed(percent);
+		leftWinch.setLeftWinchSpeed(percent);
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		winch.setLeftWinchSpeed(0);
+		leftWinch.setLeftWinchSpeed(0);
 	}
 
 	// Returns true when the command should end.

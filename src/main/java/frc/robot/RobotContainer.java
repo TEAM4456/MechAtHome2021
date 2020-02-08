@@ -40,7 +40,8 @@ public class RobotContainer {
     private final Intake intake = new Intake(RobotMap.intake);
     private final Shooter shooter = new Shooter(RobotMap.topShooter, RobotMap.bottomShooter);
     private final Actuator actuator = new Actuator(RobotMap.actuator);
-    private final Winch winch = new Winch(RobotMap.leftWinch, RobotMap.rightWinch);
+    private final RightWinch rightWinch = new RightWinch(RobotMap.rightWinch);
+    private final LeftWinch leftWinch = new LeftWinch(RobotMap.leftWinch);
     private final Rotator rotator = new Rotator(RobotMap.rotator);
     private final Holder holder = new Holder(RobotMap.holder);
 
@@ -66,7 +67,7 @@ public class RobotContainer {
         // The drive bindings need to be put in this format:
         // drive.setDefaultCommand(new RunCommand(() -> drive.controlScheme(...), drive))
         // The second "drive" is there because the RunCommand function must require drive to run it. 
-        drive.setDefaultCommand(new RunCommand(() -> diffDrive.arcadeDrive(leftY.getAsDouble(), -leftX.getAsDouble(), controller.getStickButtonPressed(Hand.kRight)), drive));
+        drive.setDefaultCommand(new RunCommand(() -> diffDrive.arcadeDrive(leftX.getAsDouble(), -leftY.getAsDouble(), controller.getStickButtonPressed(Hand.kRight)), drive));
     }
 
     /**
@@ -77,7 +78,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         JoystickButton aButton = new JoystickButton(controller, 1);
-        aButton.whileHeld(new RunIntake(intake, 0.75));
+        aButton.whileHeld(new RunIntake(intake, 0.4));
         JoystickButton bButton = new JoystickButton(controller, 2);
         bButton.whileHeld(new Shoot(shooter));
         JoystickButton xButton = new JoystickButton(controller, 3);
@@ -85,13 +86,13 @@ public class RobotContainer {
         JoystickButton yButton = new JoystickButton(controller, 4);
         yButton.whileHeld(new RunIntake(intake, -0.4));
         JoystickButton leftBumper = new JoystickButton(controller, 5);
-        leftBumper.whileHeld(new SetLeftWinchSpeed(winch, -1.0));
+        leftBumper.whileHeld(new SetLeftWinchSpeed(leftWinch, -1.0));
         JoystickButton rightBumper = new JoystickButton(controller, 6);
-        rightBumper.whileHeld(new SetRightWinchSpeed(winch, -1.0));
+        rightBumper.whileHeld(new SetRightWinchSpeed(rightWinch, -1.0));
         JoystickButton leftStick = new JoystickButton(controller, 9);
-        leftStick.whileHeld(new SetLeftWinchSpeed(winch, 1.0));
+        leftStick.whileHeld(new SetLeftWinchSpeed(leftWinch, 1.0));
         JoystickButton rightStick = new JoystickButton(controller, 10);
-        rightStick.whileHeld(new SetRightWinchSpeed(winch, 1.0));
+        rightStick.whileHeld(new SetRightWinchSpeed(rightWinch, 1.0));
         JoystickButton menuButton = new JoystickButton(controller, 8);
         menuButton.whileHeld(new TurnRotator(rotator, 0.5));
 
@@ -100,7 +101,9 @@ public class RobotContainer {
         JoystickButton rightBumper2 = new JoystickButton(controller2, 6);
         rightBumper2.whileHeld(new SetActuatorSpeed(actuator, .2));
         JoystickButton yButton2 = new JoystickButton(controller2, 4);
-        yButton2.whileHeld(new RunHolder(holder, .2));
+        yButton2.whileHeld(new RunHolder(holder, .35));
+        JoystickButton xButton2 = new JoystickButton(controller2, 3);
+        xButton2.whileHeld(new RunHolder(holder, -.35));
     }
 
 }

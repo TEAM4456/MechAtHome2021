@@ -12,27 +12,17 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Winch extends SubsystemBase {
-	private final WPI_TalonSRX leftWinch, rightWinch;
+public class LeftWinch extends SubsystemBase {
+  private final WPI_TalonSRX leftWinch;
+  /**
+   * Creates a new LeftWinch.
+   */
+  public LeftWinch(WPI_TalonSRX leftWinchTalon) {
+    leftWinch = leftWinchTalon;
 
-	/**
-	 * Creates a new Winch.
-	 */
-	public Winch(WPI_TalonSRX leftWinchTalon, WPI_TalonSRX rightWinchTalon) {
-		leftWinch = leftWinchTalon;
-		rightWinch = rightWinchTalon;
-	}
-	
-	public void setLeftWinchSpeed(double percent){
+  }
+  public void setLeftWinchSpeed(double percent){
 		leftWinch.set(ControlMode.PercentOutput, percent);
-	}
-
-	public void setRightWinchSpeed(double percent){
-		rightWinch.set(ControlMode.PercentOutput, percent);
-	}
-
-
-
+  }
 }
-
-
+ 

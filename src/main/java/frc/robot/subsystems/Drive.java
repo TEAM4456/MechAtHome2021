@@ -21,7 +21,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
  * The drivetrain of the robot.
  */
 public class Drive extends SubsystemBase {
-	private final WPI_TalonSRX leftDrive, rightDrive;
+    private final WPI_TalonSRX leftDrive, rightDrive;
     
     /**
      * The drivetrain of the robot. Takes in two {@link WPI_TalonSRX}s: a right master talon,
@@ -32,7 +32,7 @@ public class Drive extends SubsystemBase {
      */
 	public Drive(WPI_TalonSRX leftTalon, WPI_TalonSRX rightTalon) {
 		leftDrive = leftTalon;
-		rightDrive = rightTalon;
+        rightDrive = rightTalon;
 	}
 
     @Override
@@ -43,13 +43,14 @@ public class Drive extends SubsystemBase {
     }
 
     public void autoAlign(NetworkTableEntry x){
-        double leftVal = -x.getDouble(0.0)/20;
-        double rightVal = leftVal;
+        
+        double leftVal = x.getDouble(0.0)*50;
+        double rightVal = -leftVal;
 
-        SmartDashboard.putNumber("Left %Output", leftVal);
-        SmartDashboard.putNumber("Right %Output", rightVal);
+        SmartDashboard.putNumber("Left Velocity", leftVal);
+        SmartDashboard.putNumber("Right Velocity", rightVal);
 
-        leftDrive.set(ControlMode.PercentOutput, leftVal);
-        rightDrive.set(ControlMode.PercentOutput, rightVal);
+        leftDrive.set(ControlMode.Velocity, leftVal);
+        rightDrive.set(ControlMode.Velocity, rightVal);
     }
 }
