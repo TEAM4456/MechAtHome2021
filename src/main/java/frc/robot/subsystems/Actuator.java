@@ -22,6 +22,10 @@ public class Actuator extends SubsystemBase {
         actuator = actuatorTalon;
     }
 
+    public void aimAtHeight(double position){
+        actuator.set(ControlMode.Position, position);
+    }
+
     public void setActuatorSpeed(double percent){
         actuator.set(ControlMode.PercentOutput, percent);
     }
