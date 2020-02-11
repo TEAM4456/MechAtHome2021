@@ -50,7 +50,18 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("Left Velocity", leftVal);
         SmartDashboard.putNumber("Right Velocity", rightVal);
 
-        leftDrive.set(ControlMode.Velocity, leftVal);
-        rightDrive.set(ControlMode.Velocity, rightVal);
+        if(x.getDouble(0.0)>1)
+        {
+            leftDrive.set(ControlMode.Velocity, leftVal);
+            rightDrive.set(ControlMode.Velocity, rightVal);
+        }
+        else
+        {
+            leftDrive.set(ControlMode.Velocity, x.getDouble(0.0)*100);
+            rightDrive.set(ControlMode.Velocity, x.getDouble(0.0)*-100);
+        }
+
+        //leftDrive.set(ControlMode.Velocity, leftVal);
+        //rightDrive.set(ControlMode.Velocity, rightVal);
     }
 }

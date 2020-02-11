@@ -60,8 +60,8 @@ public class RobotContainer {
      */
     public RobotContainer() {
         // Configure the button bindings
-        SmartDashboard.putNumber("Top Flywheel", 0.0);
-        SmartDashboard.putNumber("Bottom Flywheel", 0.0);
+        SmartDashboard.putNumber("Top Flywheel", 0.45);
+        SmartDashboard.putNumber("Bottom Flywheel", 0.45);
         configureButtonBindings();
 
         // The drive bindings need to be put in this format:
