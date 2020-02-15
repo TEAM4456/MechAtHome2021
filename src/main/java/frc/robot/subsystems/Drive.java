@@ -43,25 +43,28 @@ public class Drive extends SubsystemBase {
     }
 
     public void autoAlign(NetworkTableEntry x){
-        
-        double leftVal = x.getDouble(0.0)*50;
-        double rightVal = -leftVal;
+        double leftVal, rightVal;
+
+        if (Math.abs(x.getDouble(0.0)) > 10)
+        {
+            leftVal = x.getDouble(0.0) * 50;
+            rightVal = x.getDouble(0.0) * -50;
+        }
+        else if (Math.abs(x.getDouble(0.0)) > 4) 
+        {
+            leftVal = x.getDouble(0.0) * 100;
+            rightVal = x.getDouble(0.0) * -100;
+        }
+        else
+        {
+            leftVal = x.getDouble(0.0) * 200;
+            rightVal = x.getDouble(0.0) * -200;
+        }
 
         SmartDashboard.putNumber("Left Velocity", leftVal);
         SmartDashboard.putNumber("Right Velocity", rightVal);
 
-        if(x.getDouble(0.0)>1)
-        {
-            leftDrive.set(ControlMode.Velocity, leftVal);
-            rightDrive.set(ControlMode.Velocity, rightVal);
-        }
-        else
-        {
-            leftDrive.set(ControlMode.Velocity, x.getDouble(0.0)*100);
-            rightDrive.set(ControlMode.Velocity, x.getDouble(0.0)*-100);
-        }
-
-        //leftDrive.set(ControlMode.Velocity, leftVal);
-        //rightDrive.set(ControlMode.Velocity, rightVal);
+        leftDrive.set(ControlMode.Velocity, leftVal);
+        rightDrive.set(ControlMode.Velocity, rightVal);
     }
 }

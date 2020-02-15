@@ -64,6 +64,10 @@ public class RobotContainer {
         SmartDashboard.putNumber("Bottom Flywheel", 0.45);
         configureButtonBindings();
 
+        RobotMap.actuator.setSelectedSensorPosition(0);
+        RobotMap.rightMaster.setSelectedSensorPosition(0);
+        RobotMap.leftMaster.setSelectedSensorPosition(0);
+
         // The drive bindings need to be put in this format:
         // drive.setDefaultCommand(new RunCommand(() -> drive.controlScheme(...), drive))
         // The second "drive" is there because the RunCommand function must require drive to run it. 
