@@ -22,10 +22,10 @@ public class ToggleEndGame extends CommandBase {
   @Override
   public void initialize() {
     if (SmartDashboard.getBoolean("Endgame", false)){
-        SmartDashboard.putBoolean("Endgame", true);
+        SmartDashboard.putBoolean("Endgame", false);
     }
     else{
-      SmartDashboard.putBoolean("Endgame", false);
+      SmartDashboard.putBoolean("Endgame", true);
     }
 
   }
