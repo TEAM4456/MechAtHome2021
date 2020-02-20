@@ -26,14 +26,6 @@ public class Shooter extends SubsystemBase {
         bottomShooter = bottomTalon;
     }
 
-    // Sets shooter angle/speed based on distance gathered from limelight. MIGHT NOT WORK
-    public void Aim(NetworkTableEntry y) {
-
-        double ty = y.getDouble(0);
-        double currentDistance = 43 / Math.tan(ty);
-
-    }
-
     public void shoot(double topVal, double bottomVal){
         topShooter.set(ControlMode.PercentOutput, topVal);
         bottomShooter.set(ControlMode.PercentOutput, bottomVal);
