@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
@@ -26,12 +27,14 @@ import frc.robot.commands.SetLeftWinchSpeed;
 import frc.robot.commands.SetRightWinchSpeed;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.TurnRotator;
+import frc.robot.commands.ToggleEndGame;
 
 /**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
@@ -46,15 +49,16 @@ public class RobotContainer {
     private final Holder holder = new Holder(RobotMap.holder);
 
     private final XboxController controller = new XboxController(0);
-    private final ControllerAxis 
+    private final ControllerAxis
         leftX = new ControllerAxis(controller, 0), 
         leftY = new ControllerAxis(controller, 1);
         //leftTrigger = new ControllerAxis(controller, 2),
-        //rightTrigger = new ControllerAxis(controller, 3),
+        //rightTrigger = new ControllerAxis(controller, 3);
         //rightX = new ControllerAxis(controller, 4), 
         //rightY = new ControllerAxis(controller, 5);
 
     private final XboxController controller2 = new XboxController(1);
+
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
@@ -62,6 +66,7 @@ public class RobotContainer {
         // Configure the button bindings
         SmartDashboard.putNumber("Top Flywheel", 0.45);
         SmartDashboard.putNumber("Bottom Flywheel", 0.45);
+        SmartDashboard.putBoolean("Endgame", false);
         configureButtonBindings();
 
         RobotMap.actuator.setSelectedSensorPosition(0);
@@ -81,33 +86,46 @@ public class RobotContainer {
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+
+
+
         JoystickButton aButton = new JoystickButton(controller, 1);
         aButton.whileHeld(new RunIntake(intake, 0.4));
+        aButton.whileHeld(new SetLeftWinchSpeed(leftWinch, 1.0));
         JoystickButton bButton = new JoystickButton(controller, 2);
         bButton.whileHeld(new Shoot(shooter));
+        bButton.whileHeld(new SetRightWinchSpeed(rightWinch, 1.0));
         JoystickButton xButton = new JoystickButton(controller, 3);
         xButton.whileHeld(new AutoAlign(drive));
         JoystickButton yButton = new JoystickButton(controller, 4);
         yButton.whileHeld(new RunIntake(intake, -0.4));
         JoystickButton leftBumper = new JoystickButton(controller, 5);
+        leftBumper.whileHeld(new SetActuatorSpeed(actuator, -.2));
         leftBumper.whileHeld(new SetLeftWinchSpeed(leftWinch, -1.0));
         JoystickButton rightBumper = new JoystickButton(controller, 6);
+        rightBumper.whileHeld(new SetActuatorSpeed(actuator, .2));
         rightBumper.whileHeld(new SetRightWinchSpeed(rightWinch, -1.0));
-        JoystickButton leftStick = new JoystickButton(controller, 9);
-        leftStick.whileHeld(new SetLeftWinchSpeed(leftWinch, 1.0));
-        JoystickButton rightStick = new JoystickButton(controller, 10);
-        rightStick.whileHeld(new SetRightWinchSpeed(rightWinch, 1.0));
         JoystickButton menuButton = new JoystickButton(controller, 8);
         menuButton.whileHeld(new TurnRotator(rotator, 0.5));
+        JoystickButton startButton = new JoystickButton(controller, 7);
+        startButton.whenPressed(new ToggleEndGame());
 
-        JoystickButton leftBumper2 = new JoystickButton(controller2, 5);
-        leftBumper2.whileHeld(new SetActuatorSpeed(actuator, -.2));
-        JoystickButton rightBumper2 = new JoystickButton(controller2, 6);
-        rightBumper2.whileHeld(new SetActuatorSpeed(actuator, .2));
+    
         JoystickButton yButton2 = new JoystickButton(controller2, 4);
         yButton2.whileHeld(new RunHolder(holder, .35));
         JoystickButton xButton2 = new JoystickButton(controller2, 3);
         xButton2.whileHeld(new RunHolder(holder, -.35));
+
+       // JoystickButton aButton2 = new JoystickButton(controller2, 1);
+        //aButton2.whileHeld(new SetLeftWinchSpeed(leftWinch, 1.0));
+        //JoystickButton bButton2 = new JoystickButton(controller2, 2);
+        //bButton2.whileHeld(new SetRightWinchSpeed(rightWinch, 1.0));
+        //JoystickButton leftBumper2 = new JoystickButton(controller2, 5);
+        //leftBumper2.whileHeld(new SetLeftWinchSpeed(leftWinch, -1.0));
+        //JoystickButton rightBumper2 = new JoystickButton(controller2, 6);
+        //rightBumper2.whileHeld(new SetRightWinchSpeed(rightWinch, -1.0));
+
+
     }
 
 }
