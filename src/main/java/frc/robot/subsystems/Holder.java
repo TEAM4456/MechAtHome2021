@@ -22,8 +22,8 @@ public class Holder extends SubsystemBase {
     public void RunHolder(double percent){
       holder.set(ControlMode.PercentOutput, percent);
     }
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+  
+    public double getDirection(){
+        return Math.signum(holder.get());
+    }
 }

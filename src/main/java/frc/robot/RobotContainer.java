@@ -18,16 +18,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 import frc.robot.RobotMap;
-import frc.robot.commands.AutoAlign;
-import frc.robot.commands.Rumble;
-import frc.robot.commands.RunHolder;
-import frc.robot.commands.RunIntake;
-import frc.robot.commands.SetActuatorSpeed;
-import frc.robot.commands.SetLeftWinchSpeed;
-import frc.robot.commands.SetRightWinchSpeed;
-import frc.robot.commands.Shoot;
-import frc.robot.commands.TurnRotator;
-import frc.robot.commands.ToggleEndGame;
+import frc.robot.commands.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -57,8 +48,6 @@ public class RobotContainer {
         //rightX = new ControllerAxis(controller, 4), 
         //rightY = new ControllerAxis(controller, 5);
 
-    private final XboxController controller2 = new XboxController(1);
-
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
@@ -69,7 +58,7 @@ public class RobotContainer {
         SmartDashboard.putBoolean("Endgame", false);
         configureButtonBindings();
 
-        RobotMap.actuator.setSelectedSensorPosition(0);
+        //RobotMap.actuator.setSelectedSensorPosition(0);
         RobotMap.rightMaster.setSelectedSensorPosition(0);
         RobotMap.leftMaster.setSelectedSensorPosition(0);
 
@@ -87,34 +76,36 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
 
-
-
         JoystickButton aButton = new JoystickButton(controller, 1);
-        aButton.whileHeld(new RunIntake(intake, 0.4));
-        aButton.whileHeld(new SetLeftWinchSpeed(leftWinch, 1.0));
+        aButton.toggleWhenPressed(new RunIntake(intake, 0.4)); //teleop
+        aButton.whileHeld(new SetLeftWinchSpeed(leftWinch, 1.0)); //endgame
+
         JoystickButton bButton = new JoystickButton(controller, 2);
-        bButton.whileHeld(new Shoot(shooter));
-        bButton.whileHeld(new SetRightWinchSpeed(rightWinch, 1.0));
+        bButton.toggleWhenPressed(new Shoot(shooter)); //teleop
+        //bButton.toggleWhenPressed(new AimAndShoot(actuator, shooter, holder, /*get this value*/, -1.0, 2.0));
+        bButton.whileHeld(new SetRightWinchSpeed(rightWinch, 1.0)); //endgame
+        
         JoystickButton xButton = new JoystickButton(controller, 3);
         xButton.whileHeld(new AutoAlign(drive));
+        
         JoystickButton yButton = new JoystickButton(controller, 4);
-        yButton.whileHeld(new RunIntake(intake, -0.4));
+        yButton.toggleWhenPressed(new RunIntake(intake, -0.4));
+        
         JoystickButton leftBumper = new JoystickButton(controller, 5);
-        leftBumper.whileHeld(new SetActuatorSpeed(actuator, -.2));
-        leftBumper.whileHeld(new SetLeftWinchSpeed(leftWinch, -1.0));
+        //leftBumper.whileHeld(new SetActuatorSpeed(actuator, -.2)); 
+        leftBumper.whileHeld(new RunHolder(holder, -0.25)); //teleop
+        leftBumper.whileHeld(new SetLeftWinchSpeed(leftWinch, -1.0)); //endgame
+        
         JoystickButton rightBumper = new JoystickButton(controller, 6);
-        rightBumper.whileHeld(new SetActuatorSpeed(actuator, .2));
-        rightBumper.whileHeld(new SetRightWinchSpeed(rightWinch, -1.0));
+        //rightBumper.whileHeld(new SetActuatorSpeed(actuator, .2));
+        rightBumper.whileHeld(new RunHolder(holder, 0.25)); //teleop
+        rightBumper.whileHeld(new SetRightWinchSpeed(rightWinch, -1.0)); //endgame
+        
         JoystickButton menuButton = new JoystickButton(controller, 8);
         menuButton.whileHeld(new TurnRotator(rotator, 0.5));
+        
         JoystickButton startButton = new JoystickButton(controller, 7);
         startButton.whenPressed(new ToggleEndGame());
-
-    
-        JoystickButton yButton2 = new JoystickButton(controller2, 4);
-        yButton2.whileHeld(new RunHolder(holder, .35));
-        JoystickButton xButton2 = new JoystickButton(controller2, 3);
-        xButton2.whileHeld(new RunHolder(holder, -.35));
 
        // JoystickButton aButton2 = new JoystickButton(controller2, 1);
         //aButton2.whileHeld(new SetLeftWinchSpeed(leftWinch, 1.0));
@@ -124,8 +115,6 @@ public class RobotContainer {
         //leftBumper2.whileHeld(new SetLeftWinchSpeed(leftWinch, -1.0));
         //JoystickButton rightBumper2 = new JoystickButton(controller2, 6);
         //rightBumper2.whileHeld(new SetRightWinchSpeed(rightWinch, -1.0));
-
-
     }
 
 }

@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotMap;
 
 public class ToggleEndGame extends CommandBase {
   /**
@@ -21,19 +22,14 @@ public class ToggleEndGame extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (SmartDashboard.getBoolean("Endgame", false)){
-        SmartDashboard.putBoolean("Endgame", false);
-    }
-    else{
-      SmartDashboard.putBoolean("Endgame", true);
-    }
-
+    RobotMap.ENDGAME = !RobotMap.ENDGAME;    
+    SmartDashboard.putBoolean("Endgame", RobotMap.ENDGAME);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //switchControls.set(boolean true);
+    
   }
 
   // Called once the command ends or is interrupted.
