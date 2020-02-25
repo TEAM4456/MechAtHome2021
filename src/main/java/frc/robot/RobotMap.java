@@ -30,6 +30,7 @@ public class RobotMap {
     public static WPI_TalonSRX rightWinch;
     public static WPI_TalonSRX rotator;
     public static WPI_TalonSRX holder;
+    public static boolean ENDGAME;
 
     public static void init(){
         leftMaster = new WPI_TalonSRX(4);
@@ -81,5 +82,7 @@ public class RobotMap {
 
         holder = new WPI_TalonSRX(12);
         holder.setInverted(true);
+
+        ENDGAME = false;
     }
 }

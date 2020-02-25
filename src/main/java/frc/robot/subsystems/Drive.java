@@ -7,14 +7,25 @@
 
 package frc.robot.subsystems;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
@@ -67,4 +78,24 @@ public class Drive extends SubsystemBase {
         leftDrive.set(ControlMode.Velocity, leftVal);
         rightDrive.set(ControlMode.Velocity, rightVal);
     }
+/*
+    public void followPath(String path){
+        try {
+            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(path);
+            Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+            RamseteCommand ramseteCommand = new RamseteCommand(trajectory, 
+                                                               new Pose2d(-10.26, 1.0, new Rotation2d(0.0)), 
+                                                               new RamseteController(b, zeta), 
+                                                               new SimpleMotorFeedforward(ks, kv), 
+                                                               new , 
+                                                               wheelSpeeds, 
+                                                               leftController, 
+                                                               rightController, 
+                                                               outputVolts, 
+                                                               requirements);
+          } catch (IOException ex) {
+            DriverStation.reportError("Unable to open trajectory: " + path, ex.getStackTrace());
+        }
+    }
+    */
 }

@@ -14,20 +14,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
     private final WPI_TalonSRX intake;
-    //private final WPI_TalonSRX holder;
 
     public Intake(WPI_TalonSRX intakeTalon) {
         intake = intakeTalon;
     }
 
-    //public Holder(WPI_TalonSRX holderTalon){
-        //holder = holderTalon;
-    //}
-
     public void runIntake(double percent){
         intake.set(ControlMode.PercentOutput, percent);
     }
 
-    //public void Holder(double held);
-        //holder.set(ControlMode.PercentOutput, held);
+    public boolean getIntakeRunning(){
+        return (intake.get() != 0);
+    }
 }
