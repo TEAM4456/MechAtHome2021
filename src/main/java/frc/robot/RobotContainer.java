@@ -76,7 +76,7 @@ public class RobotContainer {
         // The drive bindings need to be put in this format:
         // drive.setDefaultCommand(new RunCommand(() -> drive.controlScheme(...), drive))
         // The second "drive" is there because the RunCommand function must require drive to run it. 
-        drive.setDefaultCommand(new RunCommand(() -> diffDrive.arcadeDrive(leftX.getAsDouble(), -leftY.getAsDouble(), controller.getStickButtonPressed(Hand.kRight)), drive));
+        drive.setDefaultCommand(new RunCommand(() -> diffDrive.arcadeDrive(-leftY.getAsDouble(), leftX.getAsDouble(), controller.getStickButtonPressed(Hand.kRight)), drive));
     }
 
     /**
@@ -90,7 +90,7 @@ public class RobotContainer {
 
 
         JoystickButton aButton = new JoystickButton(controller, 1);
-        aButton.whileHeld(new RunIntake(intake, 0.4));
+        aButton.whileHeld(new RunIntake(intake, 0.33));
         aButton.whileHeld(new SetLeftWinchSpeed(leftWinch, 1.0));
 
         JoystickButton bButton = new JoystickButton(controller, 2);
