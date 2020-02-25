@@ -17,6 +17,7 @@ public class SetLeftWinchSpeed extends CommandBase {
 
 	/**
 	 * Creates a new SetLeftWinchSpeed.
+	 * IF U READ THIS U ARE WEIRD
 	 */
 	public SetLeftWinchSpeed(LeftWinch leftWinchSubsystem, double percentOutput) {
 		// Use addRequirements() here to declare subsystem dependencies.
