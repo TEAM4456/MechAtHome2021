@@ -7,10 +7,6 @@
 
 package frc.robot.commands;
 
-<<<<<<< HEAD
-=======
-import edu.wpi.first.wpilibj.Timer;
->>>>>>> 2107a0fa566913e5df26bafe89d9d1b636503b6e
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Holder;
