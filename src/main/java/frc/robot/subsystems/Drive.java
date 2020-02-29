@@ -54,8 +54,17 @@ public class Drive extends SubsystemBase {
     }
 
     public void autoAlign(NetworkTableEntry x){
-        double leftVal, rightVal;
+        if (x.getDouble(0.0) > 0){
+            leftDrive.set(ControlMode.Velocity, 1000);
+            rightDrive.set(ControlMode.Velocity, -1000);
+        } else {
+            leftDrive.set(ControlMode.Velocity, -1000);
+            rightDrive.set(ControlMode.Velocity, 1000);
+        }
 
+        /*double leftVal, rightVal;
+
+        
         if (Math.abs(x.getDouble(0.0)) > 10)
         {
             leftVal = x.getDouble(0.0) * 50;
@@ -74,9 +83,13 @@ public class Drive extends SubsystemBase {
 
         SmartDashboard.putNumber("Left Velocity", leftVal);
         SmartDashboard.putNumber("Right Velocity", rightVal);
+        
+        leftVal = leftDrive.getSelectedSensorPosition() - x.getDouble(0.0) * 30;
+        rightVal = rightDrive.getSelectedSensorPosition() + x.getDouble(0.0) * 30;
 
-        leftDrive.set(ControlMode.Velocity, leftVal);
-        rightDrive.set(ControlMode.Velocity, rightVal);
+        leftDrive.set(ControlMode.Position, leftVal);
+        rightDrive.set(ControlMode.Position, rightVal);
+        */
     }
 /*
     public void followPath(String path){
@@ -98,4 +111,14 @@ public class Drive extends SubsystemBase {
         }
     }
     */
+
+    public void setVelocity(double velocity){
+        leftDrive.set(ControlMode.Velocity, velocity);
+        rightDrive.set(ControlMode.Velocity, velocity);
+    }
+
+    public void spin(double velocity){
+        leftDrive.set(ControlMode.Velocity, velocity);
+        rightDrive.set(ControlMode.Velocity, -velocity);
+    }
 }

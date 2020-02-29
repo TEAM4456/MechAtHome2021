@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 import frc.robot.RobotMap;
 import frc.robot.commands.AutoAlign;
+import frc.robot.commands.BasicAutoCommand;
 import frc.robot.commands.Rumble;
 import frc.robot.commands.RunHolder;
 import frc.robot.commands.RunIntake;
@@ -76,7 +77,7 @@ public class RobotContainer {
         // The drive bindings need to be put in this format:
         // drive.setDefaultCommand(new RunCommand(() -> drive.controlScheme(...), drive))
         // The second "drive" is there because the RunCommand function must require drive to run it. 
-        drive.setDefaultCommand(new RunCommand(() -> diffDrive.arcadeDrive(-leftY.getAsDouble(), leftX.getAsDouble(), controller.getStickButtonPressed(Hand.kRight)), drive));
+        drive.setDefaultCommand(new RunCommand(() -> diffDrive.arcadeDrive(leftX.getAsDouble(), -leftY.getAsDouble(), controller.getStickButtonPressed(Hand.kRight)), drive));
     }
 
     /**
@@ -126,6 +127,10 @@ public class RobotContainer {
         rightBumper2.whileHeld(new RunHolder(holder, -.35));
 
 
+    }
+
+    public Command getAutoCommand(){
+        return new BasicAutoCommand(drive, actuator, shooter, intake);
     }
 
 }

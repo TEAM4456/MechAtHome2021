@@ -29,4 +29,8 @@ public class Actuator extends SubsystemBase {
     public void setActuatorSpeed(double percent){
         actuator.set(ControlMode.PercentOutput, percent);
     }
+
+    public int getActuatorPosition(){
+        return actuator.getSelectedSensorPosition();
+    }
 }

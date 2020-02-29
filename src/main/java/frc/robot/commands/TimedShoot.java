@@ -7,50 +7,46 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Actuator;
+import frc.robot.subsystems.Shooter;
 
-public class AimAtHeight extends CommandBase {
-    private final Actuator actuator;
-    private final double position;
-    private boolean isHigher;
+public class TimedShoot extends CommandBase {
+    private final double time;
+    private final Shooter shooter;
+    private final Timer timer = new Timer();
     
     /**
-     * Creates a new AimAtHeight.
+     * Creates a new TimedShoot.
      */
-    public AimAtHeight(Actuator actuatorSubsystem, double positionVal) {
-        // Use addRequirements() here to declare subsystem dependencies.
-        actuator = actuatorSubsystem;
-        position = positionVal;
-        addRequirements(actuatorSubsystem);
+    public TimedShoot(Shooter shooterSubsystem, double timeVal) {
+        shooter = shooterSubsystem;
+        time = timeVal;
+        addRequirements(shooterSubsystem);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        isHigher = (position > actuator.getActuatorPosition());
+        timer.start();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        actuator.setActuatorSpeed(-0.2);
+        shooter.shoot(SmartDashboard.getNumber("Top Flywheel", 0.0), SmartDashboard.getNumber("Bottom Flywheel", 0.0));
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        actuator.setActuatorSpeed(0);
+        timer.stop();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if(isHigher){
-            return (position <= actuator.getActuatorPosition());
-        } else {
-            return (position >= actuator.getActuatorPosition());
-        }
-
+        return timer.hasPeriodPassed(time);
     }
 }

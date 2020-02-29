@@ -18,7 +18,7 @@ public class AimAndShoot extends SequentialCommandGroup {
    * Creates a new AimAndShoot.
    */
   public AimAndShoot(Actuator actuatorSubsystem, Shooter shooterSubsystem, Holder holderSubsystem, 
-                     double actuatorPosition, double holderPercent, double holderRunTime) {
+                     int actuatorPosition, double holderPercent, double holderRunTime) {
     super(new AimAtHeight(actuatorSubsystem, actuatorPosition), 
           new ShootWithHolder(shooterSubsystem, holderSubsystem, holderPercent, holderRunTime));
   }

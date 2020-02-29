@@ -21,15 +21,13 @@ public class ToggleEndGame extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    RobotMap.ENDGAME = !RobotMap.ENDGAME;    
-    SmartDashboard.putBoolean("Endgame", RobotMap.ENDGAME);
+  public void initialize() { 
+    SmartDashboard.putBoolean("Endgame", !SmartDashboard.getBoolean("Endgame", false));
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
   }
 
   // Called once the command ends or is interrupted.

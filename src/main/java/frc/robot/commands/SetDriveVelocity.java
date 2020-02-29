@@ -7,50 +7,47 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Actuator;
+import frc.robot.subsystems.Drive;
 
-public class AimAtHeight extends CommandBase {
-    private final Actuator actuator;
-    private final double position;
-    private boolean isHigher;
-    
+public class SetDriveVelocity extends CommandBase {
+    private final double velocity, time;
+    private final Drive drive;
+    private final Timer timer = new Timer();
+
     /**
-     * Creates a new AimAtHeight.
+     * Creates a new SetDriveVelocity.
      */
-    public AimAtHeight(Actuator actuatorSubsystem, double positionVal) {
-        // Use addRequirements() here to declare subsystem dependencies.
-        actuator = actuatorSubsystem;
-        position = positionVal;
-        addRequirements(actuatorSubsystem);
+    public SetDriveVelocity(Drive driveSubsystem, double velocityVal, double timeVal) {
+        velocity = velocityVal;
+        time = timeVal;
+        drive = driveSubsystem;
+        addRequirements(driveSubsystem);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        isHigher = (position > actuator.getActuatorPosition());
+        timer.start();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        actuator.setActuatorSpeed(-0.2);
+        drive.setVelocity(velocity);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        actuator.setActuatorSpeed(0);
+        drive.setVelocity(0);
+        timer.stop();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if(isHigher){
-            return (position <= actuator.getActuatorPosition());
-        } else {
-            return (position >= actuator.getActuatorPosition());
-        }
-
+        return timer.hasPeriodPassed(time);
     }
 }

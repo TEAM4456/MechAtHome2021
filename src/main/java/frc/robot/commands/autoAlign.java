@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drive;
 
 public class AutoAlign extends CommandBase {
-    
+    private boolean isLeft;
     private final Drive drive;
     private final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
@@ -34,18 +34,35 @@ public class AutoAlign extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        drive.autoAlign(table.getEntry("tx"));
+        isLeft = (table.getEntry("tx").getDouble(0.0) > 0);
+        if(isLeft){
+            if (table.getEntry("tx").getDouble(0.0) < 15){
+                drive.spin(600);
+            } else {
+                drive.spin(1000);
+            }
+        } else {
+            if (table.getEntry("tx").getDouble(0.0) > -15){
+                drive.spin(-600);
+            } else {
+                drive.spin(-1000);
+            }
+        }
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        table.getEntry("ledMode").forceSetNumber(1);
+        table.getEntry("ledMode").forceSetNumber(0);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        if (isLeft){
+            return (table.getEntry("tx").getDouble(0.0) <= 0);
+        } else {
+            return (table.getEntry("tx").getDouble(0.0) > 0);
+        }
     }
 }
