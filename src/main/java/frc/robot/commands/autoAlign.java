@@ -37,13 +37,13 @@ public class AutoAlign extends CommandBase {
         isLeft = (table.getEntry("tx").getDouble(0.0) > 0);
         if(isLeft){
             if (table.getEntry("tx").getDouble(0.0) < 15){
-                drive.spin(600);
+                drive.spin(400);
             } else {
                 drive.spin(1000);
             }
         } else {
             if (table.getEntry("tx").getDouble(0.0) > -15){
-                drive.spin(-600);
+                drive.spin(-400);
             } else {
                 drive.spin(-1000);
             }
@@ -60,9 +60,9 @@ public class AutoAlign extends CommandBase {
     @Override
     public boolean isFinished() {
         if (isLeft){
-            return (table.getEntry("tx").getDouble(0.0) <= 0);
+            return (table.getEntry("tx").getDouble(0.0) >= 0);
         } else {
-            return (table.getEntry("tx").getDouble(0.0) > 0);
+            return (table.getEntry("tx").getDouble(0.0) < 0);
         }
     }
 }

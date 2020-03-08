@@ -105,12 +105,12 @@ public class RobotContainer {
         yButton.whileHeld(new RunIntake(intake, -0.4));
         
         JoystickButton leftBumper = new JoystickButton(controller, 5);
-        leftBumper.whileHeld(new SetActuatorSpeed(actuator, -.2));
+        leftBumper.whileHeld(new RunHolder(holder, -.35));
         leftBumper.whileHeld(new SetLeftWinchSpeed(leftWinch, -1.0));
         //leftBumper.whileHeld(new RunHolder(holder, .25));
 
         JoystickButton rightBumper = new JoystickButton(controller, 6);
-        rightBumper.whileHeld(new SetActuatorSpeed(actuator, .2));
+        rightBumper.whileHeld(new RunHolder(holder, .35));
         rightBumper.whileHeld(new SetRightWinchSpeed(rightWinch, -1.0));
         //rightBumper.whileHeld(new RunHolder(holder, -.25));
 
@@ -121,10 +121,10 @@ public class RobotContainer {
         startButton.whenPressed(new ToggleEndGame());
 
     
-        JoystickButton leftBumper2 = new JoystickButton(controller2, 4);
-        leftBumper2.whileHeld(new RunHolder(holder, .35));
-        JoystickButton rightBumper2 = new JoystickButton(controller2, 3);
-        rightBumper2.whileHeld(new RunHolder(holder, -.35));
+        JoystickButton leftBumper2 = new JoystickButton(controller2, 5);
+        leftBumper2.whileHeld(new SetActuatorSpeed(actuator, -.2));
+        JoystickButton rightBumper2 = new JoystickButton(controller2, 6);
+        rightBumper2.whileHeld(new SetActuatorSpeed(actuator, .2));
 
 
     }

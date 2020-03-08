@@ -62,6 +62,6 @@ public class RunHolder extends CommandBase {
         } else {
             return timer.hasPeriodPassed(time) && (holder.getDirection() > 0);
         }*/
-        return false;
+        return SmartDashboard.getBoolean("Endgame", false);
   }
 }

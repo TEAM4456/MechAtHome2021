@@ -20,7 +20,7 @@ public class BasicAutoCommand extends SequentialCommandGroup {
     public BasicAutoCommand(Drive driveSubsystem, Actuator actuatorSubsystem, Shooter shooterSubsystem, Intake intakeSubsystem) {
         // Add your commands in the super() call, e.g.
         // super(new FooCommand(), new BarCommand());
-        super(new SetDriveVelocity(driveSubsystem, 1000.0, 0.5), new AutoAlign(driveSubsystem), new AimAtHeight(actuatorSubsystem, -5000.0), 
+        super(new SetDriveVelocity(driveSubsystem, 1000.0, 0.5), /*new AutoAlign(driveSubsystem),*/ new AimAtHeight(actuatorSubsystem, -55000.0), 
               new TimedShoot(shooterSubsystem, 3.0), new RunIntake(intakeSubsystem, 0.2));
     }
 
