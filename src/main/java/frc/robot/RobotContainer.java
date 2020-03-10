@@ -95,7 +95,6 @@ public class RobotContainer {
         aButton.whileHeld(new SetLeftWinchSpeed(leftWinch, 1.0));
 
         JoystickButton bButton = new JoystickButton(controller, 2);
-        bButton.whileHeld(new Shoot(shooter));
         bButton.whileHeld(new SetRightWinchSpeed(rightWinch, 1.0));
 
         JoystickButton xButton = new JoystickButton(controller, 3);
@@ -125,6 +124,17 @@ public class RobotContainer {
         leftBumper2.whileHeld(new SetActuatorSpeed(actuator, -.2));
         JoystickButton rightBumper2 = new JoystickButton(controller2, 6);
         rightBumper2.whileHeld(new SetActuatorSpeed(actuator, .2));
+        JoystickButton aButton2 = new JoystickButton(controller2, 1);
+        aButton2.toggleWhenPressed(new Shoot(shooter));
+        JoystickButton bButton2 = new JoystickButton(controller2, 2);
+        bButton2.whileHeld(new RunIntake(intake, 0.33));
+        JoystickButton xButton2 = new JoystickButton(controller2, 3);
+        xButton2.whileHeld(new SetLeftWinchSpeed(leftWinch, 0.8));
+        xButton2.whileHeld(new SetRightWinchSpeed(rightWinch, -.8));
+        JoystickButton yButton2 = new JoystickButton(controller2, 4);
+        yButton2.whileHeld(new SetLeftWinchSpeed(leftWinch, -.8));
+        yButton2.whileHeld(new SetRightWinchSpeed(rightWinch, .8));
+
 
 
     }
