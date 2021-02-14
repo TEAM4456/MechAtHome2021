@@ -88,14 +88,12 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
 
-
-
         JoystickButton aButton = new JoystickButton(controller, 1);
         aButton.whileHeld(new RunIntake(intake, 0.33));
-        aButton.whileHeld(new SetLeftWinchSpeed(leftWinch, 1.0));
+        //aButton.whileHeld(new SetLeftWinchSpeed(leftWinch, 1.0));
 
         JoystickButton bButton = new JoystickButton(controller, 2);
-        bButton.whileHeld(new SetRightWinchSpeed(rightWinch, 1.0));
+        bButton.toggleWhenPressed(new Shooter(shooter));
 
         JoystickButton xButton = new JoystickButton(controller, 3);
         xButton.whileHeld(new AutoAlign(drive));
@@ -105,13 +103,11 @@ public class RobotContainer {
         
         JoystickButton leftBumper = new JoystickButton(controller, 5);
         leftBumper.whileHeld(new RunHolder(holder, -.35));
-        leftBumper.whileHeld(new SetLeftWinchSpeed(leftWinch, -1.0));
-        //leftBumper.whileHeld(new RunHolder(holder, .25));
+        //leftBumper.whileHeld(new SetLeftWinchSpeed(leftWinch, -1.0));
 
         JoystickButton rightBumper = new JoystickButton(controller, 6);
         rightBumper.whileHeld(new RunHolder(holder, .35));
-        rightBumper.whileHeld(new SetRightWinchSpeed(rightWinch, -1.0));
-        //rightBumper.whileHeld(new RunHolder(holder, -.25));
+        //rightBumper.whileHeld(new SetRightWinchSpeed(rightWinch, -1.0));
 
         JoystickButton menuButton = new JoystickButton(controller, 8);
         menuButton.whileHeld(new TurnRotator(rotator, 0.5));
