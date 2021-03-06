@@ -19,12 +19,12 @@ public final class DriveConstants {
     public static final int kLeftMotor2Port = 3;
     public static final int kRightMotor1Port = 1;
     public static final int kRightMotor2Port = 2;
-/*
+
     public static final int[] kLeftEncoderPorts = new int[] {0, 1};
     public static final int[] kRightEncoderPorts = new int[] {2, 3};
-    public static final boolean kLeftEncoderReversed = false;
-    public static final boolean kRightEncoderReversed = true;
-*/  
+    //public static final boolean kLeftEncoderReversed = false;
+    //public static final boolean kRightEncoderReversed = true;
+ 
     public static final double kTrackwidthMeters = 0.699;
     public static final DifferentialDriveKinematics kDriveKinematics =
         new DifferentialDriveKinematics(kTrackwidthMeters);
