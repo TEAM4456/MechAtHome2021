@@ -93,7 +93,7 @@ public class RobotContainer {
         //aButton.whileHeld(new SetLeftWinchSpeed(leftWinch, 1.0));
 
         JoystickButton bButton = new JoystickButton(controller, 2);
-        bButton.toggleWhenPressed(new Shooter(shooter));
+        bButton.toggleWhenPressed(new Shoot(shooter));
 
         JoystickButton xButton = new JoystickButton(controller, 3);
         xButton.whileHeld(new AutoAlign(drive));
