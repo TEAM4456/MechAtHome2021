@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -43,6 +44,7 @@ import frc.robot.commands.TurnRotator;
 import frc.robot.commands.ToggleEndGame;
 import frc.robot.DriveConstants;
 
+
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -70,6 +72,7 @@ public class RobotContainer {
     // rightY = new ControllerAxis(controller, 5);
 
     private final XboxController controller2 = new XboxController(1);
+   // private final AutonomousSubsystem m_robotDrive = new AutonomousSubsystem();
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -146,32 +149,34 @@ public class RobotContainer {
 
     }
 
-    public Command getAutoCommand(){
+ /*  public Command getAutoCommand(){
       //  return new BasicAutoCommand(drive, actuator, shooter, intake);
-      return new TestAuto();
-      
+ 
       String trajectoryJSON = "paths/Test.wpilib.json";
       Trajectory trajectory = new Trajectory();
       try {
         Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
         trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
       } catch (IOException ex) {
-        DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
       }
-
-  Subsystem AutonomousSubsystem;
-RamseteCommand ramseteCommand = new RamseteCommand(
-      trajectory,
-      AutonomousSubsystem::getPose,
-      new RamseteController(DriveConstants.AutoConstants.kRamseteB, DriveConstants.AutoConstants.kRamseteZeta),
-      new SimpleMotorFeedforward(DriveConstants.ksVolts,
-        DriveConstants.kvVoltSecondsPerMeter,
-        DriveConstants.kaVoltSecondsSquaredPerMeter),
-      DriveConstants.kDriveKinematics,
-      AutonomousSubsystem::getWheelSpeeds,
-      AutonomousSubsystem::tankDriveVolts, 
-  );
-  return ramseteCommand.andThen(() -> AutonomousSubsystem.tankDriveVolts(0, 0));
+/*
+		RamseteCommand ramseteCommand = new RamseteCommand(
+            trajectory,
+            m_robotDrive::getPose,
+            new RamseteController(DriveConstants.AutoConstants.kRamseteB, DriveConstants.AutoConstants.kRamseteZeta),
+            new SimpleMotorFeedforward(DriveConstants.ksVolts,
+                DriveConstants.kvVoltSecondsPerMeter,
+                DriveConstants.kaVoltSecondsSquaredPerMeter),
+            DriveConstants.kDriveKinematics,
+            m_robotDrive::getWheelSpeeds,
+            new PIDController(DriveConstants.kPDriveVel, 0, 0),
+            new PIDController(DriveConstants.kPDriveVel, 0, 0),
+            m_robotDrive::tankDriveVolts,
+            m_robotDrive
+        );
+        return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
 }
-    }
+*/
+}
 

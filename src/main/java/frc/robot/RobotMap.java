@@ -56,7 +56,7 @@ public class RobotMap {
         rightMaster.config_kF(0, 0.3, 10);
 
         rightFollower = new WPI_TalonSRX(2);
-        rightFollower.setInverted(true);
+        rightFollower.setInverted(false);
         rightFollower.set(ControlMode.Follower, 1);
 
         topShooter = new WPI_TalonSRX(6);
