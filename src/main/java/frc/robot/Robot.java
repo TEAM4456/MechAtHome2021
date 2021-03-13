@@ -64,6 +64,8 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         SmartDashboard.putBoolean("Endgame", false);
+        RobotMap.leftMaster.setSelectedSensorPosition(0);
+        RobotMap.rightMaster.setSelectedSensorPosition(0);
     }
 
     @Override
@@ -75,7 +77,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-      //  m_robotContainer.getAutoCommand().schedule();
+      m_robotContainer.getAutoCommand().schedule();
     }
 
     /**

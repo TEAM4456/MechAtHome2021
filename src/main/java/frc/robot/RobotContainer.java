@@ -72,7 +72,7 @@ public class RobotContainer {
     // rightY = new ControllerAxis(controller, 5);
 
     private final XboxController controller2 = new XboxController(1);
-   // private final AutonomousSubsystem m_robotDrive = new AutonomousSubsystem();
+    //private final AutonomousSubsystem m_robotDrive = new AutonomousSubsystem();
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -149,18 +149,19 @@ public class RobotContainer {
 
     }
 
- /*  public Command getAutoCommand(){
+ public Command getAutoCommand(){
       //  return new BasicAutoCommand(drive, actuator, shooter, intake);
- 
+      final AutonomousSubsystem m_robotDrive = new AutonomousSubsystem();
       String trajectoryJSON = "paths/Test.wpilib.json";
       Trajectory trajectory = new Trajectory();
       try {
         Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
         trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+        System.out.println("Path found");
       } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
       }
-/*
+
 		RamseteCommand ramseteCommand = new RamseteCommand(
             trajectory,
             m_robotDrive::getPose,
@@ -177,6 +178,6 @@ public class RobotContainer {
         );
         return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
 }
-*/
+
 }
 

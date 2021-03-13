@@ -4,8 +4,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
@@ -22,8 +24,12 @@ import frc.robot.*;
 
 
 public class AutonomousSubsystem extends SubsystemBase{
-  /*comment out testing
   // The motors on the left side of the drive.
+  private final WPI_TalonSRX m_right = new WPI_TalonSRX(1);
+  private final WPI_TalonSRX m_rightFollower = new WPI_TalonSRX(2);
+  private final WPI_TalonSRX m_left = new WPI_TalonSRX(4);
+  private final WPI_TalonSRX m_leftFollower = new WPI_TalonSRX(3);
+/* 3/12 edit testing new code
   private final SpeedControllerGroup m_leftMotors =
       new SpeedControllerGroup(
           new WPI_TalonSRX(4),
@@ -34,14 +40,17 @@ public class AutonomousSubsystem extends SubsystemBase{
       new SpeedControllerGroup(
           new WPI_TalonSRX(1),
           new WPI_TalonSRX(2));
-
+*/
+  private final SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(m_right, m_rightFollower);
+  private final SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(m_left, m_leftFollower);
   // The robot's drive
   private final DifferentialDrive m_drive = new DifferentialDrive(RobotMap.leftMaster, RobotMap.rightMaster);
 
-  private final WPI_TalonSRX m_leftEncoder = new WPI_TalonSRX(DriveConstants.kLeftMotor1Port);
+  private final WPI_TalonSRX m_leftEncoder = new WPI_TalonSRX(4);
 
 // The right-side drive encoder
-  private final WPI_TalonSRX m_rightEncoder = new WPI_TalonSRX(DriveConstants.kLeftMotor1Port);
+  private final WPI_TalonSRX m_rightEncoder = new WPI_TalonSRX(1);
+
 
 /*  
   // The left-side drive encoder
@@ -58,7 +67,7 @@ public class AutonomousSubsystem extends SubsystemBase{
           DriveConstants.kRightEncoderPorts[1];
           //DriveConstants.kRightEncoderReversed);
 */
-/*commenting out testing
+
   // The gyro sensor
   private final Gyro m_gyro = new AHRS();
 
@@ -68,8 +77,7 @@ public class AutonomousSubsystem extends SubsystemBase{
   /**
    * Creates a new DriveSubsystem.
    */
-/*
-public AutonomousSubsystem() { 
+ public AutonomousSubsystem() { 
   /* Sets the
    * distance per pulse for the encoders
    * //RobotMap.leftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,
@@ -80,17 +88,32 @@ public AutonomousSubsystem() {
    * 
    * @return
    */
-  /*
+
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
-  }
+   
+    m_right.setSensorPhase(DriveConstants.kRightSensorInverted);
+    m_left.setSensorPhase(DriveConstants.kLeftSensorInverted);
+
+    m_right.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_1Ms);
+    m_left.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_1Ms);
+    m_right.configVelocityMeasurementWindow(1);
+    m_left.configVelocityMeasurementWindow(1);
+
+    m_right.set(ControlMode.Velocity, 0);
+    m_left.set(ControlMode.Velocity, 0);
+
+    m_drive.setRightSideInverted(DriveConstants.kRightInverted);
+
+    m_drive.setSafetyEnabled(false);
+}
   
   private void resetEncoders() {
     m_rightEncoder.setSelectedSensorPosition(0);
     m_leftEncoder.setSelectedSensorPosition(0);
   }
   
-/*comment out testing
+
 @Override
   public void periodic() {
     // Update the odometry in the periodic block
@@ -99,12 +122,12 @@ public AutonomousSubsystem() {
   
 
   
-  public double getPositionLeft() {
-      return m_leftEncoder.getSelectedSensorPosition() / 8570;
+  public double getPositionLeft() { 
+    return m_leftEncoder.getSelectedSensorPosition() / 360;
   }
 
   public double getPositionRight() {
-      return m_rightEncoder.getSelectedSensorPosition() / 8570;
+      return m_rightEncoder.getSelectedSensorPosition() / 360;
   }
 
   public double getAverageDistance() {
@@ -116,7 +139,7 @@ public AutonomousSubsystem() {
    *
    * @return The pose.
    */
-  /* commented out testing
+
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
   }
@@ -127,7 +150,7 @@ public AutonomousSubsystem() {
    *
    * @return The current wheel speeds.
    */
-  /*comment out testing
+
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(m_leftEncoder.getSelectedSensorVelocity(), m_rightEncoder.getSelectedSensorVelocity());
   }
@@ -138,7 +161,7 @@ public AutonomousSubsystem() {
    *
    * @param pose The pose to which to set the odometry.
    */
-  /*comment out testing
+
   public void resetOdometry(Pose2d pose) {
   //  resetEncoders();
   m_odometry.resetPosition(pose, m_gyro.getRotation2d());
@@ -150,7 +173,7 @@ public AutonomousSubsystem() {
    * @param fwd the commanded forward movement
    * @param rot the commanded rotation
    */
-  /*comment out testing
+
   public void arcadeDrive(double fwd, double rot) {
     m_drive.arcadeDrive(fwd, rot);
   }
@@ -161,7 +184,7 @@ public AutonomousSubsystem() {
    * @param leftVolts the commanded left output
    * @param rightVolts the commanded right output
    */
-  /*comment out testing
+ 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
     m_leftMotors.setVoltage(leftVolts);
     m_rightMotors.setVoltage(-rightVolts);
@@ -169,12 +192,13 @@ public AutonomousSubsystem() {
   }
 
   /** Resets the drive encoders to currently read a position of 0. */
-  /*
+/*
   public void resetEncoders() {
     m_leftEncoder.reset();
     m_rightEncoder.reset();
   }
-*/
+  
+
   /**
    * Gets the average distance of the two encoders.
    *
@@ -183,7 +207,7 @@ public AutonomousSubsystem() {
   public double getAverageEncoderDistance() {
     return (m_leftEncoder.getDistance() + m_rightEncoder.getDistance()) / 2.0;
   }
-
+*/
   /**
    * Gets the left drive encoder.
    *
@@ -207,13 +231,13 @@ public AutonomousSubsystem() {
    *
    * @param maxOutput the maximum output to which the drive will be constrained
    */
-  /*Comment out testing
+
    public void setMaxOutput(double maxOutput) {
     m_drive.setMaxOutput(maxOutput);
   }
 
   /** Zeroes the heading of the robot. */
-  /*comment out testing
+
   public void zeroHeading() {
     m_gyro.reset();
   }
@@ -223,7 +247,7 @@ public AutonomousSubsystem() {
    *
    * @return the robot's heading in degrees, from -180 to 180
    */
-  /*comment out testing
+ 
   public double getHeading() {
     return m_gyro.getRotation2d().getDegrees();
   }
@@ -233,9 +257,8 @@ public AutonomousSubsystem() {
    *
    * @return The turn rate of the robot, in degrees per second
    */
-  /*
+ 
   public double getTurnRate() {
     return -m_gyro.getRate();
   }
-  */
 }
