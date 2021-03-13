@@ -25,8 +25,8 @@ public final class DriveConstants {
 
     public static final boolean kRightSensorInverted = false;
     public static final boolean kLeftSensorInverted = true;
-    public static final boolean kRightInverted = false;
-    public static final boolean kDriveInverted = false;
+    public static final boolean kRightInverted = true;
+    public static final boolean kDriveInverted = true;
  
     public static final double kTrackwidthMeters = 0.699;
     public static final DifferentialDriveKinematics kDriveKinematics =
@@ -38,8 +38,8 @@ public final class DriveConstants {
         // Assumes the encoders are directly mounted on the wheel shafts
         (kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR;
 
-    public static final int kTicksPerRev = 4096;
-    public static final double kGearRatio = 13.1/1;
+    public static final int kTicksPerRev = 1096;
+    public static final double kGearRatio = 10.71/1;
     public static final double kVelSampleTime = 0.1;
     public static final double kMaxMotorVoltage = 0.0;
     public static final int kSlot = 0;
@@ -51,11 +51,11 @@ public final class DriveConstants {
     // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
     // values for your robot.
     public static final double ksVolts = 1.26;
-    public static final double kvVoltSecondsPerMeter = 2.12;
-    public static final double kaVoltSecondsSquaredPerMeter = 0.294;
+    public static final double kvVoltSecondsPerMeter = 1.99;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.263;
 
     // Example value only - as above, this must be tuned for your drive!
-    public static final double kPDriveVel = 0.001;
+    public static final double kPDriveVel = 0.00000001;
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;

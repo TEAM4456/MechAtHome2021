@@ -10,6 +10,8 @@ package frc.robot;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -20,6 +22,7 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
@@ -63,6 +66,7 @@ public class RobotContainer {
     private final LeftWinch leftWinch = new LeftWinch(RobotMap.leftWinch);
     private final Rotator rotator = new Rotator(RobotMap.rotator);
     private final Holder holder = new Holder(RobotMap.holder);
+    private final Gyro m_gyro = new AHRS();
 
     private final XboxController controller = new XboxController(0);
     private final ControllerAxis leftX = new ControllerAxis(controller, 0), leftY = new ControllerAxis(controller, 1);
@@ -93,9 +97,9 @@ public class RobotContainer {
         // drive))
         // The second "drive" is there because the RunCommand function must require
         // drive to run it.
-        drive.setDefaultCommand(new RunCommand(() -> diffDrive.arcadeDrive(leftX.getAsDouble(), -leftY.getAsDouble(),
+       drive.setDefaultCommand(new RunCommand(() -> diffDrive.arcadeDrive(leftX.getAsDouble(), -leftY.getAsDouble(),
                 controller.getStickButtonPressed(Hand.kRight)), drive));
-    }
+ }
 
     /**
      * Use this method to define your button->command mappings. Buttons can be
