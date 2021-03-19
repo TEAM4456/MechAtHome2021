@@ -10,42 +10,33 @@ package frc.robot;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
-import frc.robot.RobotMap;
 import frc.robot.commands.AutoAlign;
 import frc.robot.commands.BasicAutoCommand;
-import frc.robot.commands.Rumble;
 import frc.robot.commands.RunHolder;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.SetActuatorSpeed;
 import frc.robot.commands.SetLeftWinchSpeed;
 import frc.robot.commands.SetRightWinchSpeed;
 import frc.robot.commands.Shoot;
-import frc.robot.commands.TestAuto;
 import frc.robot.commands.TurnRotator;
 import frc.robot.commands.ToggleEndGame;
-import frc.robot.DriveConstants;
 
 
 /**
@@ -66,7 +57,6 @@ public class RobotContainer {
     private final LeftWinch leftWinch = new LeftWinch(RobotMap.leftWinch);
     private final Rotator rotator = new Rotator(RobotMap.rotator);
     private final Holder holder = new Holder(RobotMap.holder);
-    private final Gyro m_gyro = new AHRS();
 
     private final XboxController controller = new XboxController(0);
     private final ControllerAxis leftX = new ControllerAxis(controller, 0), leftY = new ControllerAxis(controller, 1);
@@ -156,7 +146,7 @@ public class RobotContainer {
  public Command getAutoCommand(){
       //  return new BasicAutoCommand(drive, actuator, shooter, intake);
       final AutonomousSubsystem m_robotDrive = new AutonomousSubsystem();
-      String trajectoryJSON = "paths/Test.wpilib.json";
+      String trajectoryJSON = "paths/Test2.wpilib.json";
       Trajectory trajectory = new Trajectory();
       try {
         Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);

@@ -13,6 +13,7 @@ import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -27,12 +28,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import frc.robot.*;
 
 /**
  * The drivetrain of the robot.
  */
 public class Drive extends SubsystemBase {
     private final WPI_TalonSRX leftDrive, rightDrive;
+    private final AHRS gyro = new AHRS();
     
     /**
      * The drivetrain of the robot. Takes in two {@link WPI_TalonSRX}s: a right master talon,
@@ -51,6 +54,14 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("Left Position", leftDrive.getSelectedSensorPosition());
         SmartDashboard.putNumber("Right Position", rightDrive.getSelectedSensorPosition());
         SmartDashboard.putNumber("Actuator Position", RobotMap.actuator.getSelectedSensorPosition());
+
+        SmartDashboard.putNumber("Left Distance (meters)", getPositionLeft());
+        SmartDashboard.putNumber("Right Distance (meters)", getPositionRight());
+        SmartDashboard.putNumber("Left Velocity", leftDrive.getSelectedSensorVelocity() * DriveConstants.kEncoderDistancePerPulse / 1000 * 10);
+        SmartDashboard.putNumber("Right Velocity", rightDrive.getSelectedSensorVelocity() * DriveConstants.kEncoderDistancePerPulse / 1400 * 10);
+
+        SmartDashboard.putNumber("Heading", getHeading().getDegrees());
+        SmartDashboard.putNumber("Turn Rate", getTurnRate());
     }
 
     public void autoAlign(NetworkTableEntry x){
@@ -121,4 +132,20 @@ public class Drive extends SubsystemBase {
         leftDrive.set(ControlMode.Velocity, velocity);
         rightDrive.set(ControlMode.Velocity, -velocity);
     }
+
+    public Rotation2d getHeading() {
+        return Rotation2d.fromDegrees(-gyro.getAngle());
+      }
+     
+      public double getTurnRate() {
+        return -gyro.getRate();
+      }
+
+      public double getPositionLeft() {
+        return leftDrive.getSelectedSensorPosition() * DriveConstants.kEncoderDistancePerPulse / 910;
+      }
+    
+      public double getPositionRight() {
+        return rightDrive.getSelectedSensorPosition() * DriveConstants.kEncoderDistancePerPulse / 1000;
+      }
 }

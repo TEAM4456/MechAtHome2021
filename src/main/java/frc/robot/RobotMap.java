@@ -36,6 +36,7 @@ public class RobotMap {
         leftMaster = new WPI_TalonSRX(4);
         leftMaster.setInverted(true);
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+        leftMaster.setSensorPhase(true);
 
         leftMaster.config_kP(0, 0.001, 10);
         leftMaster.config_kI(0, 0.000001, 10);

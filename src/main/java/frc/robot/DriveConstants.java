@@ -33,10 +33,10 @@ public final class DriveConstants {
         new DifferentialDriveKinematics(kTrackwidthMeters);
 
     public static final int kEncoderCPR = 1024;
-    public static final double kWheelDiameterMeters = 0.143;
+    public static final double kWheelDiameterMeters = 0.1524;
     public static final double kEncoderDistancePerPulse =
         // Assumes the encoders are directly mounted on the wheel shafts
-        (kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR;
+        (kWheelDiameterMeters * Math.PI);
 
     public static final int kTicksPerRev = 1096;
     public static final double kGearRatio = 10.71/1;

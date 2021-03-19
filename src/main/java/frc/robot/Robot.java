@@ -8,9 +8,11 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -26,6 +28,7 @@ import frc.robot.subsystems.Shooter;
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
+    private final AHRS gyro = new AHRS();;
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -67,6 +70,9 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Endgame", false);
         RobotMap.leftMaster.setSelectedSensorPosition(0);
         RobotMap.rightMaster.setSelectedSensorPosition(0);
+        gyro.resetDisplacement();
+        gyro.zeroYaw();
+        System.out.println("NavX Reset");
     }
 
     @Override
