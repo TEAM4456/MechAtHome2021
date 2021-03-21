@@ -28,7 +28,6 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 import frc.robot.commands.AutoAlign;
-import frc.robot.commands.BasicAutoCommand;
 import frc.robot.commands.RunHolder;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.SetActuatorSpeed;
