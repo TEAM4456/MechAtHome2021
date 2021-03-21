@@ -92,7 +92,7 @@ public class AutonomousSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("PosX", m_odometry.getPoseMeters().getTranslation().getY());
+    SmartDashboard.putNumber("PosX", m_odometry.getPoseMeters().getTranslation().getX());
     SmartDashboard.putNumber("PosY", m_odometry.getPoseMeters().getTranslation().getY());
 
     SmartDashboard.putNumber("Left Distance (meters)", getPositionLeft());
@@ -109,11 +109,11 @@ public class AutonomousSubsystem extends SubsystemBase {
   }
 
   public double getPositionLeft() {
-    return m_left.getSelectedSensorPosition() * DriveConstants.kEncoderDistancePerPulse / 1000;
+    return m_left.getSelectedSensorPosition() * DriveConstants.kEncoderDistancePerPulse / 910;
   }
 
   public double getPositionRight() {
-    return m_right.getSelectedSensorPosition() * DriveConstants.kEncoderDistancePerPulse / 1400;
+    return m_right.getSelectedSensorPosition() * DriveConstants.kEncoderDistancePerPulse / 1290;
   }
 
   public double getAverageDistance() {
