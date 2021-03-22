@@ -22,9 +22,9 @@ import frc.robot.*;
 
 public class AutonomousSubsystem extends SubsystemBase {
   // The motors on the left side of the drive.
+  private final WPI_TalonSRX m_left = new WPI_TalonSRX(4);
   private final WPI_TalonSRX m_right = new WPI_TalonSRX(1);
   private final WPI_TalonSRX m_rightFollower = new WPI_TalonSRX(2);
-  private final WPI_TalonSRX m_left = new WPI_TalonSRX(4);
   private final WPI_TalonSRX m_leftFollower = new WPI_TalonSRX(3);
   /*
    * 3/12 edit testing new code private final SpeedControllerGroup m_leftMotors =
@@ -211,7 +211,7 @@ public class AutonomousSubsystem extends SubsystemBase {
    */
 
   public void setMaxOutput(double maxOutput) {
-    m_drive.setMaxOutput(maxOutput);
+    m_drive.setMaxOutput(1.0);
   }
 
   /** Zeroes the heading of the robot. */
@@ -219,6 +219,7 @@ public class AutonomousSubsystem extends SubsystemBase {
   public void zeroHeading() {
     m_gyro.reset();
     m_gyro.resetDisplacement();
+    m_gyro.zeroYaw();
   }
 
 

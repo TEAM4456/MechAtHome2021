@@ -21,7 +21,9 @@ import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -47,7 +49,7 @@ import frc.robot.commands.ToggleEndGame;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final DifferentialDrive diffDrive = new DifferentialDrive(RobotMap.leftMaster, RobotMap.rightMaster);
+//    private final DifferentialDrive diffDrive = new DifferentialDrive(RobotMap.leftMaster, RobotMap.rightMaster);
     private final Drive drive = new Drive(RobotMap.leftMaster, RobotMap.rightMaster);
     private final Intake intake = new Intake(RobotMap.intake);
     private final Shooter shooter = new Shooter(RobotMap.topShooter, RobotMap.bottomShooter);
@@ -66,6 +68,17 @@ public class RobotContainer {
 
     private final XboxController controller2 = new XboxController(1);
     //private final AutonomousSubsystem m_robotDrive = new AutonomousSubsystem();
+
+    DifferentialDriveVoltageConstraint autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
+        new SimpleMotorFeedforward(DriveConstants.ksVolts, DriveConstants.kvVoltSecondsPerMeter, DriveConstants.kaVoltSecondsSquaredPerMeter), DriveConstants.kDriveKinematics, 10);
+    //Configures Ramsete Command
+    TrajectoryConfig config = new TrajectoryConfig(
+        DriveConstants.AutoConstants.kMaxSpeedMetersPerSecond,
+        DriveConstants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+      // Add kinematics to ensure max speed is actually obeyed
+      .setKinematics(DriveConstants.kDriveKinematics)
+      // Apply the voltage constraint
+      .addConstraint(autoVoltageConstraint);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -86,8 +99,8 @@ public class RobotContainer {
         // drive))
         // The second "drive" is there because the RunCommand function must require
         // drive to run it.
-       drive.setDefaultCommand(new RunCommand(() -> diffDrive.arcadeDrive(leftX.getAsDouble(), -leftY.getAsDouble(),
-                controller.getStickButtonPressed(Hand.kRight)), drive));
+//       drive.setDefaultCommand(new RunCommand(() -> diffDrive.arcadeDrive(leftX.getAsDouble(), -leftY.getAsDouble(),
+//                controller.getStickButtonPressed(Hand.kRight)), drive));
  }
 
     /**
@@ -145,7 +158,7 @@ public class RobotContainer {
  public Command getAutoCommand(){
       //  return new BasicAutoCommand(drive, actuator, shooter, intake);
       final AutonomousSubsystem m_robotDrive = new AutonomousSubsystem();
-      String trajectoryJSON = "paths/Test2.wpilib.json";
+      String trajectoryJSON = "paths/BarrellTest1.wpilib.json";
       Trajectory trajectory = new Trajectory();
       try {
         Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);

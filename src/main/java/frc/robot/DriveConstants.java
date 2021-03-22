@@ -51,8 +51,8 @@ public final class DriveConstants {
     // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
     // values for your robot.
     public static final double ksVolts = 1.26;
-    public static final double kvVoltSecondsPerMeter = 1.99;
-    public static final double kaVoltSecondsSquaredPerMeter = 0.263;
+    public static final double kvVoltSecondsPerMeter = 2.12;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.294;
 
     // Example value only - as above, this must be tuned for your drive!
     public static final double kPDriveVel = 0.00000001;
@@ -62,8 +62,8 @@ public final class DriveConstants {
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 3;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+    public static final double kMaxSpeedMetersPerSecond = 2;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 2;
 
     // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
     public static final double kRamseteB = 2;
