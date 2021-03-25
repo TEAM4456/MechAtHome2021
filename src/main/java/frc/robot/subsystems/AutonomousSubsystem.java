@@ -145,8 +145,8 @@ public class AutonomousSubsystem extends SubsystemBase {
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(
-        m_left.getSelectedSensorVelocity() * 10.0 / 910,
-        m_right.getSelectedSensorVelocity() * 10.0 / 1290);
+        m_left.getSelectedSensorVelocity() * .4788 * 10.0 / 910,
+        m_right.getSelectedSensorVelocity() * .4788 * 10.0 / 1290);
   }
 
   /**
