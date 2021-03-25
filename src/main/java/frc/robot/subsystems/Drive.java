@@ -40,7 +40,7 @@ public class Drive extends SubsystemBase {
 
     @Override
     public void periodic(){
-    /*    SmartDashboard.putNumber("Left Position", leftDrive.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Left Position", leftDrive.getSelectedSensorPosition());
         SmartDashboard.putNumber("Right Position", rightDrive.getSelectedSensorPosition());
         SmartDashboard.putNumber("Actuator Position", RobotMap.actuator.getSelectedSensorPosition());
 
@@ -51,7 +51,9 @@ public class Drive extends SubsystemBase {
 
         SmartDashboard.putNumber("Heading", getHeading().getDegrees());
         SmartDashboard.putNumber("Turn Rate", getTurnRate());
-    */
+        SmartDashboard.putNumber("Yaw", gyro.getYaw());
+        SmartDashboard.putNumber("output", leftDrive.getMotorOutputVoltage());
+        
     }
 
     public void autoAlign(NetworkTableEntry x){

@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -40,10 +41,12 @@ public class AutonomousSubsystem extends SubsystemBase {
   private final DifferentialDrive m_drive = new DifferentialDrive(RobotMap.leftMaster, RobotMap.rightMaster);
 
   // The gyro sensor
-  private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
+  private final AHRS m_gyro = new AHRS(Port.kMXP);
 
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
+
+  private double yawOffset = 0;
 
   /**
    * Creates a new DriveSubsystem.
@@ -61,17 +64,19 @@ public class AutonomousSubsystem extends SubsystemBase {
      * 
      * @return
      */
-
+    
     resetEncoders();
+    zeroHeading();
     m_odometry = new DifferentialDriveOdometry(getHeading());
 
     m_right.setSensorPhase(true);
     m_left.setSensorPhase(false);
-
+/* Commented out for testing
     m_right.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_1Ms);
     m_left.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_1Ms);
     m_right.configVelocityMeasurementWindow(1);
     m_left.configVelocityMeasurementWindow(1);
+    */
 
     m_right.set(ControlMode.Velocity, 0);
     m_left.set(ControlMode.Velocity, 0);
@@ -88,6 +93,9 @@ public class AutonomousSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    m_odometry.update(getHeading(), getPositionLeft(), getPositionRight());
+ 
+  /*
     SmartDashboard.putNumber("PosX", m_odometry.getPoseMeters().getTranslation().getX());
     SmartDashboard.putNumber("PosY", m_odometry.getPoseMeters().getTranslation().getY());
 
@@ -101,7 +109,7 @@ public class AutonomousSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Turn Rate", getTurnRate());
 
     // Update the odometry in the periodic block
-    m_odometry.update(getHeading(), getPositionLeft(), getPositionRight());
+*/
   }
 
   public double getPositionLeft() {
@@ -137,8 +145,8 @@ public class AutonomousSubsystem extends SubsystemBase {
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(
-        m_left.getSelectedSensorVelocity() * DriveConstants.kEncoderDistancePerPulse * 10,
-        m_right.getSelectedSensorVelocity() * DriveConstants.kEncoderDistancePerPulse * 10);
+        m_left.getSelectedSensorVelocity() * 10.0 / 910,
+        m_right.getSelectedSensorVelocity() * 10.0 / 1290);
   }
 
   /**
@@ -171,8 +179,8 @@ public class AutonomousSubsystem extends SubsystemBase {
    */
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    m_leftMotors.setVoltage(leftVolts);
-    m_rightMotors.setVoltage(-rightVolts);
+    m_leftMotors.setVoltage(leftVolts / 12);
+    m_rightMotors.setVoltage(-rightVolts / 12);
     m_drive.feed();
   }
 
@@ -218,7 +226,6 @@ public class AutonomousSubsystem extends SubsystemBase {
 
   public void zeroHeading() {
     m_gyro.reset();
-    m_gyro.resetDisplacement();
     m_gyro.zeroYaw();
   }
 
