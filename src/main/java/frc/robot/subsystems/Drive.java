@@ -13,6 +13,8 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -25,6 +27,9 @@ import frc.robot.*;
 public class Drive extends SubsystemBase {
     private final WPI_TalonSRX leftDrive, rightDrive;
     private final AHRS gyro = new AHRS();
+    private final DifferentialDrive diffDrive = new DifferentialDrive(RobotMap.leftMaster, RobotMap.rightMaster);
+    private final XboxController controller = new XboxController(0);
+    private final ControllerAxis leftX = new ControllerAxis(controller, 0), leftY = new ControllerAxis(controller, 1);
     
     /**
      * The drivetrain of the robot. Takes in two {@link WPI_TalonSRX}s: a right master talon,
@@ -46,8 +51,8 @@ public class Drive extends SubsystemBase {
 
         SmartDashboard.putNumber("Left Distance (meters)", getPositionLeft());
         SmartDashboard.putNumber("Right Distance (meters)", getPositionRight());
-        SmartDashboard.putNumber("Left Velocity", leftDrive.getSelectedSensorVelocity() * DriveConstants.kEncoderDistancePerPulse / 1000 * 10);
-        SmartDashboard.putNumber("Right Velocity", rightDrive.getSelectedSensorVelocity() * DriveConstants.kEncoderDistancePerPulse / 1400 * 10);
+        SmartDashboard.putNumber("Left Velocity", leftDrive.getSelectedSensorVelocity() * DriveConstants.kEncoderDistancePerPulse * 10 / 910);
+        SmartDashboard.putNumber("Right Velocity", rightDrive.getSelectedSensorVelocity() * DriveConstants.kEncoderDistancePerPulse * 10 / 1290);
 
         SmartDashboard.putNumber("Heading", getHeading().getDegrees());
         SmartDashboard.putNumber("Turn Rate", getTurnRate());
@@ -123,6 +128,10 @@ public class Drive extends SubsystemBase {
     public void spin(double velocity){
         leftDrive.set(ControlMode.Velocity, velocity);
         rightDrive.set(ControlMode.Velocity, -velocity);
+    }
+
+    public void arcadeDrive(double speed, double rotation){
+            diffDrive.arcadeDrive(speed, rotation);
     }
 
     public Rotation2d getHeading() {

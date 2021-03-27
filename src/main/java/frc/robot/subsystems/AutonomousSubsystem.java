@@ -145,8 +145,8 @@ public class AutonomousSubsystem extends SubsystemBase {
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(
-        m_left.getSelectedSensorVelocity() * .4788 * 10.0 / 910,
-        m_right.getSelectedSensorVelocity() * .4788 * 10.0 / 1290);
+        m_left.getSelectedSensorVelocity() * 10.0 * .4788 / 910,
+        m_right.getSelectedSensorVelocity() * 10.0 * .4788 / 1290);
   }
 
   /**
@@ -179,8 +179,8 @@ public class AutonomousSubsystem extends SubsystemBase {
    */
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    m_leftMotors.setVoltage(leftVolts / 12);
-    m_rightMotors.setVoltage(-rightVolts / 12);
+    m_leftMotors.setVoltage(leftVolts);
+    m_rightMotors.setVoltage(-rightVolts);
     m_drive.feed();
   }
 
@@ -222,6 +222,10 @@ public class AutonomousSubsystem extends SubsystemBase {
     m_drive.setMaxOutput(1.0);
   }
 
+  public void stopMotors() {
+    m_left.set(ControlMode.PercentOutput, 0);
+    m_right.set(ControlMode.PercentOutput, 0);
+  }
   /** Zeroes the heading of the robot. */
 
   public void zeroHeading() {
