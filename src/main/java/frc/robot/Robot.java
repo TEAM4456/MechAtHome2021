@@ -11,29 +11,36 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.ResetOdometryCommand;
+import frc.robot.subsystems.AutonomousSubsystem;
+import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Shooter;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to each mode, as described in the TimedRobot
+ * documentation. If you change the name of this class or the package after
+ * creating this project, you must also update the build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
-    private final AHRS gyro = new AHRS();;
+    private final AHRS gyro = new AHRS();
 
     /**
-     * This function is run when the robot is first started up and should be used for any
-     * initialization code.
+     * This function is run when the robot is first started up and should be used
+     * for any initialization code.
      */
     @Override
     public void robotInit() {
-        // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+        // Instantiate our RobotContainer. This will perform all our button bindings,
+        // and put our
         // autonomous chooser on the dashboard.
         RobotMap.init();
         m_robotContainer = new RobotContainer();
@@ -41,17 +48,22 @@ public class Robot extends TimedRobot {
     }
 
     /**
-     * This function is called every robot packet, no matter the mode. Use this for items like
-     * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
+     * This function is called every robot packet, no matter the mode. Use this for
+     * items like diagnostics that you want ran during disabled, autonomous,
+     * teleoperated and test.
      *
-     * <p>This runs after the mode specific periodic functions, but before
-     * LiveWindow and SmartDashboard integrated updating.
+     * <p>
+     * This runs after the mode specific periodic functions, but before LiveWindow
+     * and SmartDashboard integrated updating.
      */
     @Override
     public void robotPeriodic() {
-        // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
-        // commands, running already-scheduled commands, removing finished or interrupted commands,
-        // and running subsystem periodic() methods.  This must be called from the robot's periodic
+        // Runs the Scheduler. This is responsible for polling buttons, adding
+        // newly-scheduled
+        // commands, running already-scheduled commands, removing finished or
+        // interrupted commands,
+        // and running subsystem periodic() methods. This must be called from the
+        // robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
         SmartDashboard.putNumber("Right Encoder", RobotMap.rightMaster.getSelectedSensorPosition());
@@ -67,8 +79,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Endgame", false);
         RobotMap.leftMaster.setSelectedSensorPosition(0);
         RobotMap.rightMaster.setSelectedSensorPosition(0);
-        gyro.zeroYaw();
-        gyro.resetDisplacement();
+        AutonomousSubsystem.resetOdometry(Pose2d pose);
         System.out.println("NavX Reset");
     }
 
@@ -77,7 +88,8 @@ public class Robot extends TimedRobot {
     }
 
     /**
-     * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
+     * This autonomous runs the autonomous command selected by your
+     * {@link RobotContainer} class.
      */
     @Override
     public void autonomousInit() {

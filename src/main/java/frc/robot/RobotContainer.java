@@ -29,7 +29,6 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
-import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutoAlign;
 import frc.robot.commands.RunHolder;
 import frc.robot.commands.RunIntake;
@@ -39,6 +38,7 @@ import frc.robot.commands.SetRightWinchSpeed;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.TurnRotator;
 import frc.robot.commands.ToggleEndGame;
+import frc.robot.DriveConstants.*;
 
 
 /**
@@ -50,7 +50,7 @@ import frc.robot.commands.ToggleEndGame;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-//    private final DifferentialDrive diffDrive = new DifferentialDrive(RobotMap.leftMaster, RobotMap.rightMaster);
+ //   private final DifferentialDrive diffDrive = new DifferentialDrive(RobotMap.leftMaster, RobotMap.rightMaster);
     private final Drive drive = new Drive(RobotMap.leftMaster, RobotMap.rightMaster);
     private final Intake intake = new Intake(RobotMap.intake);
     private final Shooter shooter = new Shooter(RobotMap.topShooter, RobotMap.bottomShooter);
@@ -62,7 +62,6 @@ public class RobotContainer {
 
     private final XboxController controller = new XboxController(0);
     private final ControllerAxis leftX = new ControllerAxis(controller, 0), leftY = new ControllerAxis(controller, 1);
-    private final ArcadeDrive ArcadeDrive = new ArcadeDrive(drive, controller);
     // leftTrigger = new ControllerAxis(controller, 2),
     // rightTrigger = new ControllerAxis(controller, 3);
     // rightX = new ControllerAxis(controller, 4),
@@ -75,8 +74,8 @@ public class RobotContainer {
         new SimpleMotorFeedforward(DriveConstants.ksVolts, DriveConstants.kvVoltSecondsPerMeter, DriveConstants.kaVoltSecondsSquaredPerMeter), DriveConstants.kDriveKinematics, 10);
     //Configures Ramsete Command
     TrajectoryConfig config = new TrajectoryConfig(
-        DriveConstants.AutoConstants.kMaxSpeedMetersPerSecond,
-        DriveConstants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+            AutoConstants.kMaxSpeedMetersPerSecond,
+            AutoConstants.kMaxAccelerationMetersPerSecondSquared)
       // Add kinematics to ensure max speed is actually obeyed
       .setKinematics(DriveConstants.kDriveKinematics)
       // Apply the voltage constraint
@@ -101,9 +100,9 @@ public class RobotContainer {
         // drive))
         // The second "drive" is there because the RunCommand function must require
         // drive to run it.
- //      drive.setDefaultCommand(new RunCommand(() -> diffDrive.arcadeDrive(leftX.getAsDouble(), -leftY.getAsDouble(),
- //               controller.getStickButtonPressed(Hand.kRight)), drive));
-    drive.setDefaultCommand(new ArcadeDrive(drive, controller));
+//      drive.setDefaultCommand(new RunCommand(() -> diffDrive.arcadeDrive(leftX.getAsDouble(), -leftY.getAsDouble(),
+//               controller.getStickButtonPressed(Hand.kRight)), drive));
+
  }
 
     /**
@@ -161,7 +160,7 @@ public class RobotContainer {
  public Command getAutoCommand(){
       //  return new BasicAutoCommand(drive, actuator, shooter, intake);
       final AutonomousSubsystem m_robotDrive = new AutonomousSubsystem();
-      String trajectoryJSON = "paths/BarrellTest4_0.wpilib.json";
+      String trajectoryJSON = "paths/output/gbarrelRacingPath.wpilib.json";
       Trajectory trajectory = new Trajectory();
       try {
         Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
@@ -170,7 +169,7 @@ public class RobotContainer {
       } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
       }
-
+      
 		RamseteCommand ramseteCommand = new RamseteCommand(
             trajectory,
             m_robotDrive::getPose,
@@ -186,6 +185,8 @@ public class RobotContainer {
             m_robotDrive
         );
         return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
+
+
 }
 
 }
