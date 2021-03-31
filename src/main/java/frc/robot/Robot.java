@@ -79,7 +79,6 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Endgame", false);
         RobotMap.leftMaster.setSelectedSensorPosition(0);
         RobotMap.rightMaster.setSelectedSensorPosition(0);
-        AutonomousSubsystem.resetOdometry(Pose2d pose);
         System.out.println("NavX Reset");
     }
 
