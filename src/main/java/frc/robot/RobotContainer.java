@@ -50,7 +50,7 @@ import frc.robot.DriveConstants.*;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
- //   private final DifferentialDrive diffDrive = new DifferentialDrive(RobotMap.leftMaster, RobotMap.rightMaster);
+    private final DifferentialDrive diffDrive = new DifferentialDrive(RobotMap.leftMaster, RobotMap.rightMaster);
     private final Drive drive = new Drive(RobotMap.leftMaster, RobotMap.rightMaster);
     private final Intake intake = new Intake(RobotMap.intake);
     private final Shooter shooter = new Shooter(RobotMap.topShooter, RobotMap.bottomShooter);
@@ -100,8 +100,8 @@ public class RobotContainer {
         // drive))
         // The second "drive" is there because the RunCommand function must require
         // drive to run it.
-//      drive.setDefaultCommand(new RunCommand(() -> diffDrive.arcadeDrive(leftX.getAsDouble(), -leftY.getAsDouble(),
-//               controller.getStickButtonPressed(Hand.kRight)), drive));
+      drive.setDefaultCommand(new RunCommand(() -> diffDrive.arcadeDrive(leftX.getAsDouble(), -leftY.getAsDouble(),
+               controller.getStickButtonPressed(Hand.kRight)), drive));
 
  }
 
